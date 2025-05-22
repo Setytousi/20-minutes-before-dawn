@@ -19,7 +19,6 @@ public class RegisterMenuView implements Screen {
     private final TextField passwordButton;
     private final TextField securityQuestionButton;
     private final TextButton loginButton;
-    private final TextButton guestButton;
     private final TextButton registerButton;
     private final Label menuLabel;
     private final Label securityQuestion;
@@ -42,13 +41,19 @@ public class RegisterMenuView implements Screen {
         this.securityQuestionButton = new TextField("", skin);
         this.registerButton = new TextButton("Register", skin);
         this.loginButton = new TextButton("Login", skin);
-        this.guestButton = new TextButton("Guest", skin);
         this.usernameLabel = new Label("Username:", skin, "subtitle");
         this.passwordLabel = new Label("Password:", skin, "subtitle");
-        this.successLabel = new Label("", skin, "font");
-        this.errorLabel = new Label("", skin, "font");
+        this.successLabel = new Label("", skin, "subtitle");
+        this.errorLabel = new Label("", skin, "subtitle");
 
         this.table = new Table();
+    }
+
+    public void setErrorLabel(String error) {
+        this.errorLabel.setText(error);
+    }
+    public void setSuccessLabel(String success) {
+        this.successLabel.setText(success);
     }
 
     @Override
@@ -62,9 +67,10 @@ public class RegisterMenuView implements Screen {
         table.add(menuLabel).height(50).colspan(2);
         table.row().pad(30, 0, 0, 0);
 
-        table.add(successLabel);
-        table.add(errorLabel);
-        table.row().pad(30, 0, 0, 0);
+        table.add(successLabel).colspan(2).center();
+        table.row();
+        table.add(errorLabel).colspan(2).center();
+        table.row().pad(40, 0, 0, 0);
 
         table.add(usernameLabel).left().padRight(13);
         table.add(usernameButton).width(300).height(70);
@@ -83,8 +89,6 @@ public class RegisterMenuView implements Screen {
 
         table.add(loginButton).width(300).height(60).colspan(2);
         table.row().pad(10, 0, 0, 0);
-
-        table.add(guestButton).width(300).height(60).colspan(2);
 
         stage.addActor(table);
     }
@@ -132,10 +136,6 @@ public class RegisterMenuView implements Screen {
 
     public TextButton getLoginButton() {
         return loginButton;
-    }
-
-    public TextButton getGuestButton() {
-        return guestButton;
     }
 
     public TextButton getRegisterButton() {
