@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class App {
     private static ArrayList<User> users = new ArrayList<>();
     private static User loggedInUser;
+    private static Game currentGame;
 
     public static void addUser(User user) {
         users.add(user);
@@ -20,5 +21,9 @@ public class App {
 
     public static ArrayList<User> getUsers() {
         return users;
+    }
+
+    public static Game getCurrentGame() {
+        return currentGame;
     }
 }
