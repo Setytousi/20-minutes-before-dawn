@@ -1,4 +1,4 @@
 package com.tildawn.Controllers;
 
-public class OptionMenuController {
+public class WeaponController {
 }

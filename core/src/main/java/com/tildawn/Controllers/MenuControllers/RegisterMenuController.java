@@ -25,10 +25,22 @@ public class RegisterMenuController {
                 String answer = view.getSecurityQuestionButton().getText().trim();
 
                 if (!username.isEmpty() && !password.isEmpty() && !answer.isEmpty() && password.matches("(?=.*[A-Z])(?=.*[()&_@$#%*]).{8,}")) {
-                    User user = new User(username, password, answer);
-                    App.addUser(user);
-                    registerMenuView2.setSuccessLabel("registered successfully");
-                    registerMenuView2.setErrorLabel("");
+                    boolean check = false;
+                    for (User user : App.getUsers()) {
+                        if (user.getUsername().equals(username)) {
+                            check = true;
+                        }
+                    }
+                    if (check) {
+                        registerMenuView2.setErrorLabel("Username is already taken!");
+                        registerMenuView2.setSuccessLabel("");
+                    }
+                    else {
+                        User user = new User(username, password, answer);
+                        App.addUser(user);
+                        registerMenuView2.setSuccessLabel("registered successfully");
+                        registerMenuView2.setErrorLabel("");
+                    }
                 }
                 else {
                     registerMenuView2.setSuccessLabel("");

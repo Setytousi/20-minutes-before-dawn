@@ -37,6 +37,7 @@ public class LoginMenuController {
                             loginMenuView2.setSuccessLabel("");
                         }
                         else{
+                            App.setLoggedInUser(user);
                             Main.getMain().getScreen().dispose();
                             Main.getMain().setScreen(new MainMenuView(new MainMenuController(), GameAssetManager.getGameAssetManager().getSkin()));
                             return;
@@ -51,7 +52,6 @@ public class LoginMenuController {
                 App.setLoggedInUser(user);
                 Main.getMain().getScreen().dispose();
                 Main.getMain().setScreen(new MainMenuView(new MainMenuController(), GameAssetManager.getGameAssetManager().getSkin()));
-                return;
             }
             else if (view.getChangePasswordButton().isChecked()){
                 String username = view.getUsernameForgetButton().getText().trim();
