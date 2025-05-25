@@ -1,4 +1,4 @@
-package com.tildawn.Controllers;
+package com.tildawn.Controllers.MenuControllers;
 
 import com.tildawn.Main;
 import com.tildawn.Models.GameAssetManager;

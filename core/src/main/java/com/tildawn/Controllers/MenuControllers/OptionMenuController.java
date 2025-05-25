@@ -1,4 +1,4 @@
-package com.tildawn.Controllers;
+package com.tildawn.Controllers.MenuControllers;
 
 import com.badlogic.gdx.Input;
 import com.tildawn.Main;
@@ -28,8 +28,8 @@ public class OptionMenuController {
                     user.setDown(Input.Keys.S);
                 }
                 else{
-                    user.setLeft(Input.Keys.RIGHT);
-                    user.setRight(Input.Keys.LEFT);
+                    user.setLeft(Input.Keys.LEFT);
+                    user.setRight(Input.Keys.RIGHT);
                     user.setUp(Input.Keys.UP);
                     user.setDown(Input.Keys.DOWN);
                 }

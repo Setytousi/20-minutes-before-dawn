@@ -1,6 +1,5 @@
-package com.tildawn.Controllers;
+package com.tildawn.Controllers.MenuControllers;
 
-import com.badlogic.gdx.Gdx;
 import com.tildawn.Main;
 import com.tildawn.Models.App;
 import com.tildawn.Models.GameAssetManager;

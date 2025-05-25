@@ -2,8 +2,9 @@ package com.tildawn;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.tildawn.Controllers.StartMenuController;
+import com.tildawn.Controllers.MenuControllers.StartMenuController;
 import com.tildawn.Models.GameAssetManager;
+import com.tildawn.Views.ProfileMenuView;
 import com.tildawn.Views.StartMenuView;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
@@ -44,4 +45,11 @@ public class Main extends Game {
     public static void setBatch(SpriteBatch batch) {
         Main.batch = batch;
     }
+
+    public void onFileDropped(String path) {
+        if (getScreen() instanceof ProfileMenuView) {
+            ((ProfileMenuView) getScreen()).onAvatarFileDropped(path);
+        }
+    }
+
 }

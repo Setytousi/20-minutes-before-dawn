@@ -2,6 +2,7 @@ package com.tildawn.lwjgl3;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3WindowAdapter;
 import com.tildawn.Main;
 
 /** Launches the desktop (LWJGL3) application. */
@@ -12,8 +13,22 @@ public class Lwjgl3Launcher {
     }
 
     private static Lwjgl3Application createApplication() {
-        return new Lwjgl3Application(new Main(), getDefaultConfiguration());
+        Main main = new Main(); // instance needed for file dropping
+
+        Lwjgl3ApplicationConfiguration config = getDefaultConfiguration();
+
+        config.setWindowListener(new Lwjgl3WindowAdapter() {
+            @Override
+            public void filesDropped(String[] files) {
+                if (files.length > 0) {
+                    main.onFileDropped(files[0]);
+                }
+            }
+        });
+
+        return new Lwjgl3Application(main, config);
     }
+
 
     private static Lwjgl3ApplicationConfiguration getDefaultConfiguration() {
         Lwjgl3ApplicationConfiguration configuration = new Lwjgl3ApplicationConfiguration();

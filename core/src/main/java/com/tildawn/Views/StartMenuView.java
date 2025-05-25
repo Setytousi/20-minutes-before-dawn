@@ -1,6 +1,5 @@
 package com.tildawn.Views;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
@@ -11,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.tildawn.Controllers.StartMenuController;
+import com.tildawn.Controllers.MenuControllers.StartMenuController;
 import com.tildawn.Main;
 import com.tildawn.Models.GameAssetManager;
 

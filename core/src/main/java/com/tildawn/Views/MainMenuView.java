@@ -2,15 +2,12 @@ package com.tildawn.Views;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.tildawn.Controllers.MainMenuController;
-import com.tildawn.Controllers.StartMenuController;
+import com.tildawn.Controllers.MenuControllers.MainMenuController;
 import com.tildawn.Main;
 import com.tildawn.Models.App;
-import com.tildawn.Models.GameAssetManager;
 
 public class MainMenuView implements Screen {
     private final MainMenuController controller;
@@ -32,6 +29,7 @@ public class MainMenuView implements Screen {
     public MainMenuView(MainMenuController controller, Skin skin) {
         this.controller = controller;
         controller.setView(this);
+
         this.table = new Table();
         this.menuLabel = new Label("Main Menu", skin, "title");
         this.avatar = new Image(App.getLoggedInUser().getAvatarTexture());
@@ -65,25 +63,25 @@ public class MainMenuView implements Screen {
         table.row().pad(30, 0, 0, 0); // space before buttons
 
         // Buttons (each takes full row)
-        table.add(newGame).width(300).height(55).colspan(3);
+        table.add(newGame).width(350).height(60).colspan(3);
         table.row().pad(10, 0, 0, 0);
 
-        table.add(resumeGame).width(300).height(55).colspan(3);
+        table.add(resumeGame).width(350).height(60).colspan(3);
         table.row().pad(10, 0, 0, 0);
 
-        table.add(options).width(300).height(55).colspan(3);
+        table.add(options).width(350).height(60).colspan(3);
         table.row().pad(10, 0, 0, 0);
 
-        table.add(profile).width(300).height(55).colspan(3);
+        table.add(profile).width(350).height(60).colspan(3);
         table.row().pad(10, 0, 0, 0);
 
-        table.add(scoreBoard).width(300).height(55).colspan(3);
+        table.add(scoreBoard).width(350).height(60).colspan(3);
         table.row().pad(10, 0, 0, 0);
 
-        table.add(talentMenu).width(300).height(55).colspan(3);
+        table.add(talentMenu).width(350).height(60).colspan(3);
         table.row().pad(10, 0, 0, 0);
 
-        table.add(logout).width(300).height(55).colspan(3);
+        table.add(logout).width(350).height(60).colspan(3);
 
         stage.addActor(table);
         com.badlogic.gdx.Gdx.input.setInputProcessor(stage);

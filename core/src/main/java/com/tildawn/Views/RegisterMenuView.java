@@ -2,14 +2,12 @@ package com.tildawn.Views;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.tildawn.Controllers.RegisterMenuController;
+import com.tildawn.Controllers.MenuControllers.RegisterMenuController;
 import com.tildawn.Main;
-import com.tildawn.Models.GameAssetManager;
 
 public class RegisterMenuView implements Screen {
     private final RegisterMenuController controller;

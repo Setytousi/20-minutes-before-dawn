@@ -26,4 +26,8 @@ public class App {
     public static Game getCurrentGame() {
         return currentGame;
     }
+
+    public static void removeUser(User user) {
+        users.remove(user);
+    }
 }

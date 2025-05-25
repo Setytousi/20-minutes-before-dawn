@@ -1,11 +1,12 @@
-package com.tildawn.Controllers;
+package com.tildawn.Controllers.MenuControllers;
 
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.tildawn.Controllers.GameController;
 import com.tildawn.Main;
 import com.tildawn.Models.App;
 import com.tildawn.Models.Enums.Heros;
 import com.tildawn.Models.Enums.Weapons;
 import com.tildawn.Models.GameAssetManager;
+import com.tildawn.Views.GameView;
 import com.tildawn.Views.PreGameMenuView;
 
 public class PreGameMenuController {
@@ -72,8 +73,8 @@ public class PreGameMenuController {
                 else if (view.getGameTimeSelectBox().getSelectedIndex() == 3){
                     App.getLoggedInUser().setGameTime(20);
                 }
-                //TODO
-                return;
+                Main.getMain().getScreen().dispose();
+                Main.getMain().setScreen(new GameView(new GameController(), GameAssetManager.getGameAssetManager().getSkin()));
             }
         }
     }
