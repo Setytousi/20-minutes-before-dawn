@@ -1,10 +1,12 @@
 package com.tildawn.Views;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -28,7 +30,7 @@ public class GameView implements Screen, InputProcessor {
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.zoom = 0.3f;
         stage = new Stage(new ScreenViewport());
-        Gdx.input.setInputProcessor(stage);
+        Gdx.input.setInputProcessor(this);
     }
 
     @Override
@@ -97,9 +99,12 @@ public class GameView implements Screen, InputProcessor {
     public void dispose() {
 
     }
-
     @Override
     public boolean keyDown(int i) {
+        if (i == Input.Keys.R) {
+            controller.getWeaponController().startReload();
+            return true;
+        }
         return false;
     }
 
@@ -114,8 +119,10 @@ public class GameView implements Screen, InputProcessor {
     }
 
     @Override
-    public boolean touchDown(int i, int i1, int i2, int i3) {
-        return false;
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        Vector3 worldCoords = camera.unproject(new Vector3(screenX, screenY, 0));
+        controller.getWeaponController().fireBullet(worldCoords.x, worldCoords.y);
+        return true;
     }
 
     @Override
@@ -134,9 +141,15 @@ public class GameView implements Screen, InputProcessor {
     }
 
     @Override
-    public boolean mouseMoved(int i, int i1) {
+    public boolean mouseMoved(int screenX, int screenY) {
+        // Convert mouse screen position to world coordinates
+        Vector3 worldCoordinates = camera.unproject(new Vector3(screenX, screenY, 0));
+
+        controller.getWeaponController().handleWeaponRotation(worldCoordinates.x, worldCoordinates.y);
+
         return false;
     }
+
 
     @Override
     public boolean scrolled(float v, float v1) {

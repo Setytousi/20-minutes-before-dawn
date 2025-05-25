@@ -24,6 +24,38 @@ public class GameAssetManager {
     private final Texture weaponTexture1 = new Texture(Gdx.files.internal("Images_grouped_2/Sprite/RevolverStill/RevolverStill.png"));
     private final Texture weaponTexture2 = new Texture(Gdx.files.internal("Images_grouped_2/Sprite/T/T_DualShotgun_Gun.png"));
     private final Texture weaponTexture3 = new Texture(Gdx.files.internal("Images_grouped_2/Sprite/T/T_DualSMGs_Icon.png"));
+    private final Texture bulletTexture = new Texture(Gdx.files.internal("bullet.png"));
+
+
+    private final Texture treeMonster1 = new Texture(Gdx.files.internal("Images_grouped_2/Sprite/T/T_TreeMonster_0.png"));
+    private final Texture treeMonster2 = new Texture(Gdx.files.internal("Images_grouped_2/Sprite/T/T_TreeMonster_1.png"));
+    private final Texture treeMonster3 = new Texture(Gdx.files.internal("Images_grouped_2/Sprite/T/T_TreeMonster_2.png"));
+    private final Animation<Texture> treeMonsterSpawnAnimation = new Animation<Texture>(1f, treeMonster1, treeMonster2, treeMonster3);
+    private final Texture treeMonsterSpawn1 = new Texture(Gdx.files.internal("Images_grouped_2/Sprite/T/T_TreeMonsterWalking.png"));
+    private final Animation<Texture> treeMonsterAnimation = new Animation<>(3f, treeMonsterSpawn1);
+
+    private final Texture tentacleMonster1 = new Texture(Gdx.files.internal("Images_grouped_2/Sprite/T/T_TentacleSpawn_0.png"));
+    private final Texture tentacleMonster2 = new Texture(Gdx.files.internal("Images_grouped_2/Sprite/T/T_TentacleSpawn_1.png"));
+    private final Texture tentacleMonster3 = new Texture(Gdx.files.internal("Images_grouped_2/Sprite/T/T_TentacleSpawn_2.png"));
+    private final Animation<Texture> tentacleSpawnAnimation = new Animation<>(1f, tentacleMonster1, tentacleMonster2, tentacleMonster3);
+    private final Texture tentacleMonsterSpawn1 = new Texture(Gdx.files.internal("Images_grouped_2/Sprite/T/T_TentacleEnemy_0.png"));
+    private final Texture tentacleMonsterSpawn2 = new Texture(Gdx.files.internal("Images_grouped_2/Sprite/T/T_TentacleEnemy_1.png"));
+    private final Texture tentacleMonsterSpawn3 = new Texture(Gdx.files.internal("Images_grouped_2/Sprite/T/T_TentacleEnemy_2.png"));
+    private final Texture tentacleMonsterSpawn4 = new Texture(Gdx.files.internal("Images_grouped_2/Sprite/T/T_TentacleEnemy_3.png"));
+    private final Animation<Texture> tentacleAnimation = new Animation<>(2f, tentacleMonsterSpawn1, tentacleMonsterSpawn2, tentacleMonsterSpawn3, tentacleMonsterSpawn4);
+
+
+    private final Texture eyeBat1 = new Texture(Gdx.files.internal("Images_grouped_2/Sprite/T/T_EyeBat_EM.png"));
+    private final Animation<Texture> eyeBatSpawnAnimation = new Animation<>(2f, eyeBat1);
+    private final Texture eyeBatSpawn1 = new Texture(Gdx.files.internal("Images_grouped_2/Sprite/T/T_EyeBat_0.png"));
+    private final Texture eyeBatSpawn2 = new Texture(Gdx.files.internal("Images_grouped_2/Sprite/T/T_EyeBat_1.png"));
+    private final Texture eyeBatSpawn3 = new Texture(Gdx.files.internal("Images_grouped_2/Sprite/T/T_EyeBat_2.png"));
+    private final Texture eyeBatSpawn4 = new Texture(Gdx.files.internal("Images_grouped_2/Sprite/T/T_EyeBat_3.png"));
+    private final Animation<Texture> eyeBatAnimation = new Animation<>(2f, eyeBatSpawn1, eyeBatSpawn2, eyeBatSpawn3, eyeBatSpawn4);
+
+    private final Animation<Texture> elderBrainSpawnAnimation = new Animation<>(3f, new Texture(Gdx.files.internal("Images_grouped_2/Sprite/ElderBrain/ElderBrain_Em.png")));
+    private final Animation<Texture> elderBrainAnimation = new Animation<>(3f, new Texture(Gdx.files.internal("Images_grouped_2/Sprite/ElderBrain/ElderBrain.png")));
+
 
     private final Texture dasherIdle1 = new Texture(Gdx.files.internal("Heros/Dasher/idle/Idle_0 #8325.png"));
     private final Texture dasherIdle2 = new Texture(Gdx.files.internal("Heros/Dasher/idle/Idle_1 #8355.png"));
@@ -143,5 +175,41 @@ public class GameAssetManager {
 
     public Animation<Texture> getShanaIdleAnimation() {
         return shanaIdleAnimation;
+    }
+
+    public Texture getBulletTexture() {
+        return bulletTexture;
+    }
+
+    public Animation<Texture> getTreeMonsterSpawnAnimation() {
+        return treeMonsterSpawnAnimation;
+    }
+
+    public Animation<Texture> getTreeMonsterAnimation() {
+        return treeMonsterAnimation;
+    }
+
+    public Animation<Texture> getTentacleSpawnAnimation() {
+        return tentacleSpawnAnimation;
+    }
+
+    public Animation<Texture> getEyeBatSpawnAnimation() {
+        return eyeBatSpawnAnimation;
+    }
+
+    public Animation<Texture> getElderBrainSpawnAnimation() {
+        return elderBrainSpawnAnimation;
+    }
+
+    public Animation<Texture> getElderBrainAnimation() {
+        return elderBrainAnimation;
+    }
+
+    public Animation<Texture> getEyeBatAnimation() {
+        return eyeBatAnimation;
+    }
+
+    public Animation<Texture> getTentacleAnimation() {
+        return tentacleAnimation;
     }
 }

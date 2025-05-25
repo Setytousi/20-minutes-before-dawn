@@ -26,7 +26,7 @@ public class GameController {
         if (view != null) {
             worldController.update();
             playerController.update(mapWidth, mapHeight);
-//            weaponController.update();
+            weaponController.update(playerController.getPlayer().getPosX(), playerController.getPlayer().getPosY());
         }
     }
 
