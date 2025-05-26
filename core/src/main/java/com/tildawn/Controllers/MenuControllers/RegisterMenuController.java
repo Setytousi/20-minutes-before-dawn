@@ -19,6 +19,8 @@ public class RegisterMenuController {
             RegisterMenuView registerMenuView2 = new RegisterMenuView(new RegisterMenuController(), GameAssetManager.getGameAssetManager().getSkin());
 
             if (view.getRegisterButton().isChecked()){
+                GameAssetManager.getGameAssetManager().getUIclick().setVolume(0.5f);
+                GameAssetManager.getGameAssetManager().getUIclick().play();
                 String username = view.getUsernameButton().getText().trim();
                 String password = view.getPasswordButton().getText().trim();
                 String answer = view.getSecurityQuestionButton().getText().trim();
@@ -49,6 +51,8 @@ public class RegisterMenuController {
                 Main.getMain().setScreen(registerMenuView2);
             }
             else if (view.getLoginButton().isChecked()) {
+                GameAssetManager.getGameAssetManager().getUIclick().setVolume(0.5f);
+                GameAssetManager.getGameAssetManager().getUIclick().play();
                 Main.getMain().getScreen().dispose();
                 Main.getMain().setScreen(new LoginMenuView(new LoginMenuController(), GameAssetManager.getGameAssetManager().getSkin()));
             }

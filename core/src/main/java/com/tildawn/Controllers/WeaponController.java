@@ -6,6 +6,7 @@ import com.badlogic.gdx.utils.TimeUtils;
 import com.tildawn.Main;
 import com.tildawn.Models.App;
 import com.tildawn.Models.Bullet;
+import com.tildawn.Models.GameAssetManager;
 import com.tildawn.Models.Weapon;
 import com.badlogic.gdx.math.Vector2;
 
@@ -84,22 +85,37 @@ public class WeaponController {
         if (!canShoot) return;
         Sprite weaponSprite = weapon.getSprite();
 
-        if (weapon.getAmmo() <= 0) return;
+        if (weapon.getAmmo() <= 0) {
+            if (App.getLoggedInUser().isAutoReload()){
+                startReload();
+            }
+            return;
+        }
         weapon.setAmmo(weapon.getAmmo() - 1);
 
-        // Start bullet from weapon's center
+        GameAssetManager.getGameAssetManager().getShootingSound().play();
+        // Weapon center
         float weaponCenterX = weaponSprite.getX() + weaponSprite.getWidth() / 2f;
         float weaponCenterY = weaponSprite.getY() + weaponSprite.getHeight() / 2f;
 
-        // Direction from weapon to mouse
-        Vector2 direction = new Vector2(mouseWorldX - weaponCenterX, mouseWorldY - weaponCenterY).nor();
+        // Base direction
+        Vector2 baseDirection = new Vector2(mouseWorldX - weaponCenterX, mouseWorldY - weaponCenterY).nor();
 
-        // Create and add bullet
-        Bullet bullet = new Bullet(weaponCenterX, weaponCenterY, direction);
-        bullets.add(bullet);
+        int projectileCount = App.getLoggedInUser().getWeaponType().getProjectile();
+        float spreadAngle = 1f;
+
+        for (int i = 0; i < projectileCount; i++) {
+            float angleOffset = (i - projectileCount / 2f) * spreadAngle;
+            Vector2 spreadDir = baseDirection.cpy().rotateDeg(angleOffset).nor();
+
+            Bullet bullet = new Bullet(weaponCenterX, weaponCenterY, spreadDir);
+            bullets.add(bullet);
+        }
     }
 
+
     public void startReload(){
+        GameAssetManager.getGameAssetManager().getWeaponReload().play();
         isReloading = true;
         canShoot = false;
         reloadEndTime = TimeUtils.nanoTime() + (long)(timeReload * 1_000_000_000L);

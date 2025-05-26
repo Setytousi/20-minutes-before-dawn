@@ -6,21 +6,21 @@ import com.tildawn.Models.GameAssetManager;
 
 public enum Enemies {
 
-    tree("tree", 100000000, 0, GameAssetManager.getGameAssetManager().getTreeMonsterSpawnAnimation(), GameAssetManager.getGameAssetManager().getTreeMonsterAnimation()),
-    tentacle("tentacle", 25, 1, GameAssetManager.getGameAssetManager().getTentacleSpawnAnimation(), GameAssetManager.getGameAssetManager().getTentacleAnimation()),
-    eyebat("eyebat", 50, 2, GameAssetManager.getGameAssetManager().getEyeBatSpawnAnimation(), GameAssetManager.getGameAssetManager().getEyeBatAnimation()),
-    elder("elder", 400, 5, GameAssetManager.getGameAssetManager().getElderBrainSpawnAnimation(), GameAssetManager.getGameAssetManager().getElderBrainAnimation()),
+    tree("tree", 100000000, 0f, GameAssetManager.getGameAssetManager().getTreeMonsterSpawnAnimation(), GameAssetManager.getGameAssetManager().getTreeMonsterAnimation()),
+    tentacle("tentacle", 10, 0.1f, GameAssetManager.getGameAssetManager().getTentacleSpawnAnimation(), GameAssetManager.getGameAssetManager().getTentacleAnimation()),
+    eyebat("eyebat", 16, 0.2f, GameAssetManager.getGameAssetManager().getEyeBatSpawnAnimation(), GameAssetManager.getGameAssetManager().getEyeBatAnimation()),
+    elder("elder", 400, 0.5f, GameAssetManager.getGameAssetManager().getElderBrainSpawnAnimation(), GameAssetManager.getGameAssetManager().getElderBrainAnimation()),
     ;
 
 
 
     private String name;
     private int HP;
-    private int moveSpeed;
+    private float moveSpeed;
     private Animation<Texture> spawnAnimation;
     private Animation<Texture> animation;
 
-    Enemies(String name, int HP, int moveSpeed, Animation<Texture> spawnAnimation, Animation<Texture> animation) {
+    Enemies(String name, int HP, float moveSpeed, Animation<Texture> spawnAnimation, Animation<Texture> animation) {
         this.name = name;
         this.HP = HP;
         this.moveSpeed = moveSpeed;
@@ -44,7 +44,7 @@ public enum Enemies {
         return animation;
     }
 
-    public int getMoveSpeed() {
+    public float getMoveSpeed() {
         return moveSpeed;
     }
 }

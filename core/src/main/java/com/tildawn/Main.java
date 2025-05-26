@@ -1,7 +1,9 @@
 package com.tildawn;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.tildawn.Controllers.MenuControllers.StartMenuController;
 import com.tildawn.Models.GameAssetManager;
 import com.tildawn.Views.ProfileMenuView;
@@ -12,11 +14,22 @@ public class Main extends Game {
 
     private static Main main;
     private static SpriteBatch batch;
+    private static ShaderProgram grayscaleShader;
+
 
     @Override
     public void create() {
         main = this;
         batch = new SpriteBatch();
+        GameAssetManager.getGameAssetManager().getBackgroundMusic().setLooping(true);
+        GameAssetManager.getGameAssetManager().getBackgroundMusic().setVolume(0.5f);
+        GameAssetManager.getGameAssetManager().getBackgroundMusic().play();
+        ShaderProgram.pedantic = false;
+        grayscaleShader = new ShaderProgram(
+            Gdx.files.internal("shaders/default.vert"),
+            Gdx.files.internal("shaders/grayscale.frag")
+        );
+        Main.setGrayscaleShader(grayscaleShader);
         getMain().setScreen(new StartMenuView(new StartMenuController(), GameAssetManager.getGameAssetManager().getSkin()));
     }
 
@@ -50,6 +63,14 @@ public class Main extends Game {
         if (getScreen() instanceof ProfileMenuView) {
             ((ProfileMenuView) getScreen()).onAvatarFileDropped(path);
         }
+    }
+
+    public static ShaderProgram getGrayscaleShader() {
+        return grayscaleShader;
+    }
+
+    public static void setGrayscaleShader(ShaderProgram shader) {
+        grayscaleShader = shader;
     }
 
 }

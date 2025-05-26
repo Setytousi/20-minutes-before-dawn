@@ -1,5 +1,6 @@
 package com.tildawn.Controllers;
 
+import com.badlogic.gdx.Gdx;
 import com.tildawn.Models.App;
 import com.tildawn.Models.Player;
 import com.tildawn.Models.Weapon;
@@ -10,6 +11,7 @@ public class GameController {
     private PlayerController playerController;
     private WorldController worldController;
     private WeaponController weaponController;
+    private EnemyController enemyController;
     private int mapWidth;
     private int mapHeight;
 
@@ -19,14 +21,16 @@ public class GameController {
         worldController = new WorldController(playerController);
         mapWidth = worldController.getMapWidth();
         mapHeight = worldController.getMapHeight();
+        enemyController = new EnemyController(App.getLoggedInUser().getGameTime(), mapWidth, mapHeight);
         weaponController = new WeaponController(new Weapon());
     }
 
     public void updateGame() {
         if (view != null) {
             worldController.update();
-            playerController.update(mapWidth, mapHeight);
+            playerController.update(mapWidth, mapHeight, enemyController);
             weaponController.update(playerController.getPlayer().getPosX(), playerController.getPlayer().getPosY());
+            enemyController.update(Gdx.graphics.getDeltaTime(), playerController.getPlayer().getPosX(), playerController.getPlayer().getPosY(), mapWidth, mapHeight, weaponController.getBullets());
         }
     }
 

@@ -3,6 +3,7 @@ package com.tildawn.Models;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Rectangle;
 import com.tildawn.Models.Enums.Heros;
 
 public class Player {
@@ -12,7 +13,6 @@ public class Player {
     private float posX = 0;
     private float posY = 0;
     private float playerHealth = 100;
-//    private CollisionRect rect ;
     private float time = 0;
     private float speed = 5;
     private boolean isPlayerIdle = true;
@@ -22,9 +22,8 @@ public class Player {
         this.heroType = heroType;
         this.playerTexture = heroType.getTexture();
         this.playerSprite = new Sprite(playerTexture);
-        playerSprite.setSize(20, 20);
+        playerSprite.setSize(18, 20);
         playerSprite.setPosition((float) Gdx.graphics.getWidth() / 2, (float) Gdx.graphics.getHeight() / 2);
-//        rect = new CollisionRect((float) Gdx.graphics.getWidth() / 2, (float) Gdx.graphics.getHeight(), playerTexture.getWidth() * 3, playerTexture.getHeight() * 3);
     }
 
     public Heros getHeroType() {
@@ -105,5 +104,9 @@ public class Player {
 
     public void setPlayerRunning(boolean playerRunning) {
         isPlayerRunning = playerRunning;
+    }
+
+    public Rectangle getBounds() {
+        return playerSprite.getBoundingRectangle();
     }
 }

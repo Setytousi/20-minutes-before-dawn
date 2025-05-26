@@ -6,7 +6,7 @@ import com.tildawn.Models.GameAssetManager;
 public enum Weapons {
     weapon1("revolver", GameAssetManager.getGameAssetManager().getWeaponTexture1(), 20, 1, 1, 6),
     weapon2("shotgun", GameAssetManager.getGameAssetManager().getWeaponTexture2(), 10, 4, 1, 2),
-    weapon3("SMGs Dual", GameAssetManager.getGameAssetManager().getWeaponTexture3(), 8, 1, 2, 24);
+    weapon3("SMGs Dual", GameAssetManager.getGameAssetManager().getWeaponTexture3(), 8, 2, 2, 24);
 
     private final String name;
     private final Texture texture;

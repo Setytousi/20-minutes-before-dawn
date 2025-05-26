@@ -1,12 +1,10 @@
 package com.tildawn.Models;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.sun.org.apache.xerces.internal.impl.dv.xs.AnyURIDV;
 
 public class GameAssetManager {
     private static GameAssetManager gameAssetManager;
@@ -25,36 +23,37 @@ public class GameAssetManager {
     private final Texture weaponTexture2 = new Texture(Gdx.files.internal("Images_grouped_2/Sprite/T/T_DualShotgun_Gun.png"));
     private final Texture weaponTexture3 = new Texture(Gdx.files.internal("Images_grouped_2/Sprite/T/T_DualSMGs_Icon.png"));
     private final Texture bulletTexture = new Texture(Gdx.files.internal("bullet.png"));
+    private final Texture seed = new Texture(Gdx.files.internal("Images_grouped_2/seed.png"));
 
 
     private final Texture treeMonster1 = new Texture(Gdx.files.internal("Images_grouped_2/Sprite/T/T_TreeMonster_0.png"));
     private final Texture treeMonster2 = new Texture(Gdx.files.internal("Images_grouped_2/Sprite/T/T_TreeMonster_1.png"));
     private final Texture treeMonster3 = new Texture(Gdx.files.internal("Images_grouped_2/Sprite/T/T_TreeMonster_2.png"));
-    private final Animation<Texture> treeMonsterSpawnAnimation = new Animation<Texture>(1f, treeMonster1, treeMonster2, treeMonster3);
+    private final Animation<Texture> treeMonsterSpawnAnimation = new Animation<Texture>(0.3f, treeMonster1, treeMonster2, treeMonster3);
     private final Texture treeMonsterSpawn1 = new Texture(Gdx.files.internal("Images_grouped_2/Sprite/T/T_TreeMonsterWalking.png"));
-    private final Animation<Texture> treeMonsterAnimation = new Animation<>(3f, treeMonsterSpawn1);
+    private final Animation<Texture> treeMonsterAnimation = new Animation<>(0.3f, treeMonsterSpawn1);
 
     private final Texture tentacleMonster1 = new Texture(Gdx.files.internal("Images_grouped_2/Sprite/T/T_TentacleSpawn_0.png"));
     private final Texture tentacleMonster2 = new Texture(Gdx.files.internal("Images_grouped_2/Sprite/T/T_TentacleSpawn_1.png"));
     private final Texture tentacleMonster3 = new Texture(Gdx.files.internal("Images_grouped_2/Sprite/T/T_TentacleSpawn_2.png"));
-    private final Animation<Texture> tentacleSpawnAnimation = new Animation<>(1f, tentacleMonster1, tentacleMonster2, tentacleMonster3);
+    private final Animation<Texture> tentacleSpawnAnimation = new Animation<>(0.3f, tentacleMonster1, tentacleMonster2, tentacleMonster3);
     private final Texture tentacleMonsterSpawn1 = new Texture(Gdx.files.internal("Images_grouped_2/Sprite/T/T_TentacleEnemy_0.png"));
     private final Texture tentacleMonsterSpawn2 = new Texture(Gdx.files.internal("Images_grouped_2/Sprite/T/T_TentacleEnemy_1.png"));
     private final Texture tentacleMonsterSpawn3 = new Texture(Gdx.files.internal("Images_grouped_2/Sprite/T/T_TentacleEnemy_2.png"));
     private final Texture tentacleMonsterSpawn4 = new Texture(Gdx.files.internal("Images_grouped_2/Sprite/T/T_TentacleEnemy_3.png"));
-    private final Animation<Texture> tentacleAnimation = new Animation<>(2f, tentacleMonsterSpawn1, tentacleMonsterSpawn2, tentacleMonsterSpawn3, tentacleMonsterSpawn4);
+    private final Animation<Texture> tentacleAnimation = new Animation<>(0.3f, tentacleMonsterSpawn1, tentacleMonsterSpawn2, tentacleMonsterSpawn3, tentacleMonsterSpawn4);
 
 
     private final Texture eyeBat1 = new Texture(Gdx.files.internal("Images_grouped_2/Sprite/T/T_EyeBat_EM.png"));
-    private final Animation<Texture> eyeBatSpawnAnimation = new Animation<>(2f, eyeBat1);
+    private final Animation<Texture> eyeBatSpawnAnimation = new Animation<>(0.3f, eyeBat1);
     private final Texture eyeBatSpawn1 = new Texture(Gdx.files.internal("Images_grouped_2/Sprite/T/T_EyeBat_0.png"));
     private final Texture eyeBatSpawn2 = new Texture(Gdx.files.internal("Images_grouped_2/Sprite/T/T_EyeBat_1.png"));
     private final Texture eyeBatSpawn3 = new Texture(Gdx.files.internal("Images_grouped_2/Sprite/T/T_EyeBat_2.png"));
     private final Texture eyeBatSpawn4 = new Texture(Gdx.files.internal("Images_grouped_2/Sprite/T/T_EyeBat_3.png"));
-    private final Animation<Texture> eyeBatAnimation = new Animation<>(2f, eyeBatSpawn1, eyeBatSpawn2, eyeBatSpawn3, eyeBatSpawn4);
+    private final Animation<Texture> eyeBatAnimation = new Animation<>(0.3f, eyeBatSpawn1, eyeBatSpawn2, eyeBatSpawn3, eyeBatSpawn4);
 
-    private final Animation<Texture> elderBrainSpawnAnimation = new Animation<>(3f, new Texture(Gdx.files.internal("Images_grouped_2/Sprite/ElderBrain/ElderBrain_Em.png")));
-    private final Animation<Texture> elderBrainAnimation = new Animation<>(3f, new Texture(Gdx.files.internal("Images_grouped_2/Sprite/ElderBrain/ElderBrain.png")));
+    private final Animation<Texture> elderBrainSpawnAnimation = new Animation<>(0.3f, new Texture(Gdx.files.internal("Images_grouped_2/Sprite/ElderBrain/ElderBrain_Em.png")));
+    private final Animation<Texture> elderBrainAnimation = new Animation<>(0.3f, new Texture(Gdx.files.internal("Images_grouped_2/Sprite/ElderBrain/ElderBrain.png")));
 
 
     private final Texture dasherIdle1 = new Texture(Gdx.files.internal("Heros/Dasher/idle/Idle_0 #8325.png"));
@@ -63,7 +62,7 @@ public class GameAssetManager {
     private final Texture dasherIdle4 = new Texture(Gdx.files.internal("Heros/Dasher/idle/Idle_3 #8452.png"));
     private final Texture dasherIdle5 = new Texture(Gdx.files.internal("Heros/Dasher/idle/Idle_4 #8313.png"));
     private final Texture dasherIdle6 = new Texture(Gdx.files.internal("Heros/Dasher/idle/Idle_5 #8302.png"));
-    private final Animation<Texture> dasherIdleAnimation = new Animation<>(0.1f, dasherIdle1, dasherIdle2, dasherIdle3, dasherIdle4, dasherIdle5, dasherIdle6);
+    private final Animation<Texture> dasherIdleAnimation = new Animation<>(0.3f, dasherIdle1, dasherIdle2, dasherIdle3, dasherIdle4, dasherIdle5, dasherIdle6);
 
     private final Texture diamondIdle1 = new Texture(Gdx.files.internal("Heros/Diamond/idle/Idle_0 #8328.png"));
     private final Texture diamondIdle2 = new Texture(Gdx.files.internal("Heros/Diamond/idle/Idle_1 #8358.png"));
@@ -71,7 +70,7 @@ public class GameAssetManager {
     private final Texture diamondIdle4 = new Texture(Gdx.files.internal("Heros/Diamond/idle/Idle_3 #8455.png"));
     private final Texture diamondIdle5 = new Texture(Gdx.files.internal("Heros/Diamond/idle/Idle_4 #8316.png"));
     private final Texture diamondIdle6 = new Texture(Gdx.files.internal("Heros/Diamond/idle/Idle_5 #8305.png"));
-    private final Animation<Texture> diamondIdleAnimation = new Animation<>(0.1f, diamondIdle1, diamondIdle2, diamondIdle3, diamondIdle4, diamondIdle5, diamondIdle6);
+    private final Animation<Texture> diamondIdleAnimation = new Animation<>(0.3f, diamondIdle1, diamondIdle2, diamondIdle3, diamondIdle4, diamondIdle5, diamondIdle6);
 
 
     private final Texture lilithIdle1 = new Texture(Gdx.files.internal("Heros/Lilith/idle/Idle_0 #8333.png"));
@@ -80,7 +79,7 @@ public class GameAssetManager {
     private final Texture lilithIdle4 = new Texture(Gdx.files.internal("Heros/Lilith/idle/Idle_3 #8460.png"));
     private final Texture lilithIdle5 = new Texture(Gdx.files.internal("Heros/Lilith/idle/Idle_4 #8321.png"));
     private final Texture lilithIdle6 = new Texture(Gdx.files.internal("Heros/Lilith/idle/Idle_5 #8310.png"));
-    private final Animation<Texture> lilithIdleAnimation = new Animation<>(0.1f, lilithIdle1, lilithIdle2, lilithIdle3, lilithIdle4, lilithIdle5, lilithIdle6);
+    private final Animation<Texture> lilithIdleAnimation = new Animation<>(0.3f, lilithIdle1, lilithIdle2, lilithIdle3, lilithIdle4, lilithIdle5, lilithIdle6);
 
     private final Texture scarletIdle1 = new Texture(Gdx.files.internal("Heros/Scarlet/idle/Idle_0 #8327.png"));
     private final Texture scarletIdle2 = new Texture(Gdx.files.internal("Heros/Scarlet/idle/Idle_1 #8357.png"));
@@ -88,7 +87,7 @@ public class GameAssetManager {
     private final Texture scarletIdle4 = new Texture(Gdx.files.internal("Heros/Scarlet/idle/Idle_3 #8454.png"));
     private final Texture scarletIdle5 = new Texture(Gdx.files.internal("Heros/Scarlet/idle/Idle_4 #8315.png"));
     private final Texture scarletIdle6 = new Texture(Gdx.files.internal("Heros/Scarlet/idle/Idle_5 #8304.png"));
-    private final Animation<Texture> scarletIdleAnimation = new Animation<>(0.1f, scarletIdle1, scarletIdle2, scarletIdle3, scarletIdle4, scarletIdle5, scarletIdle6);
+    private final Animation<Texture> scarletIdleAnimation = new Animation<>(0.3f, scarletIdle1, scarletIdle2, scarletIdle3, scarletIdle4, scarletIdle5, scarletIdle6);
 
     private final Texture shanaIdle1 = new Texture(Gdx.files.internal("Heros/Shana/idle/Idle_0 #8330.png"));
     private final Texture shanaIdle2 = new Texture(Gdx.files.internal("Heros/Shana/idle/Idle_1 #8360.png"));
@@ -96,9 +95,21 @@ public class GameAssetManager {
     private final Texture shanaIdle4 = new Texture(Gdx.files.internal("Heros/Shana/idle/Idle_3 #8457.png"));
     private final Texture shanaIdle5 = new Texture(Gdx.files.internal("Heros/Shana/idle/Idle_4 #8318.png"));
     private final Texture shanaIdle6 = new Texture(Gdx.files.internal("Heros/Shana/idle/Idle_5 #8307.png"));
-    private final Animation<Texture> shanaIdleAnimation = new Animation<>(0.1f, shanaIdle1, shanaIdle2, shanaIdle3, shanaIdle4, shanaIdle5, shanaIdle6);
+    private final Animation<Texture> shanaIdleAnimation = new Animation<>(0.3f, shanaIdle1, shanaIdle2, shanaIdle3, shanaIdle4, shanaIdle5, shanaIdle6);
 
 
+    private Music backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("AudioClip/Pretty Dungeon LOOP.wav"));
+    private Music bgMusic1 = Gdx.audio.newMusic(Gdx.files.internal("AudioClip/Pretty Dungeon LOOP.wav"));
+    private Music bgMusic2 = Gdx.audio.newMusic(Gdx.files.internal("AudioClip/cave themeb4.ogg"));
+    private Music UIclick = Gdx.audio.newMusic(Gdx.files.internal("AudioClip/UI Click 36.wav"));
+    private Music walkSound = Gdx.audio.newMusic(Gdx.files.internal("AudioClip/Footsteps_Casual_Grass_01.wav"));
+    private Music enemyDeathSound = Gdx.audio.newMusic(Gdx.files.internal("AudioClip/Explosion_Blood_01.wav"));
+    private Music playerDamage = Gdx.audio.newMusic(Gdx.files.internal("AudioClip/sfx_sounds_impact1.wav"));
+    private Music lowHealthAlarm = Gdx.audio.newMusic(Gdx.files.internal("AudioClip/sfx_lowhealth_alarmloop1.wav"));
+    private Music shootingSound = Gdx.audio.newMusic(Gdx.files.internal("AudioClip/single_shot.wav"));
+    private Music weaponReload = Gdx.audio.newMusic(Gdx.files.internal("AudioClip/Weapon_Shotgun_Reload.wav"));
+    private Music nothing = Gdx.audio.newMusic(Gdx.files.internal("AudioClip/1-second-of-silence.mp3"));
+    private Music healSound = Gdx.audio.newMusic(Gdx.files.internal("AudioClip/Heal_Short.wav"));
 
     public static GameAssetManager getGameAssetManager(){
         if (gameAssetManager == null){
@@ -211,5 +222,78 @@ public class GameAssetManager {
 
     public Animation<Texture> getTentacleAnimation() {
         return tentacleAnimation;
+    }
+
+    public Music getBackgroundMusic() {
+        return backgroundMusic;
+    }
+
+    public void setBackgroundMusic(Music backgroundMusic) {
+        this.backgroundMusic = backgroundMusic;
+    }
+
+    public Music getUIclick() {
+        if (App.getLoggedInUser() != null && !App.getLoggedInUser().isSfxEnabled()){
+            return nothing;
+        }
+        return UIclick;
+    }
+
+    public Music getBgMusic2() {
+        return bgMusic2;
+    }
+
+    public Music getBgMusic1() {
+        return bgMusic1;
+    }
+
+    public Music getWalkSound() {
+        if (App.getLoggedInUser() != null && !App.getLoggedInUser().isSfxEnabled()){
+            return nothing;
+        }
+        return walkSound;
+    }
+
+    public Music getEnemyDeathSound() {
+        if (App.getLoggedInUser() != null && !App.getLoggedInUser().isSfxEnabled()){
+            return nothing;
+        }
+        return enemyDeathSound;
+    }
+
+    public Music getPlayerDamage() {
+        if (App.getLoggedInUser() != null && !App.getLoggedInUser().isSfxEnabled()){
+            return nothing;
+        }
+        return playerDamage;
+    }
+
+    public Music getLowHealthAlarm() {
+        return lowHealthAlarm;
+    }
+
+    public Music getShootingSound() {
+        if (App.getLoggedInUser() != null && !App.getLoggedInUser().isSfxEnabled()){
+            return nothing;
+        }
+        return shootingSound;
+    }
+
+    public Music getWeaponReload() {
+        if (App.getLoggedInUser() != null && !App.getLoggedInUser().isSfxEnabled()){
+            return nothing;
+        }
+        return weaponReload;
+    }
+
+    public Music getHealSound() {
+        if (App.getLoggedInUser() != null && !App.getLoggedInUser().isSfxEnabled()){
+            return nothing;
+        }
+        return healSound;
+    }
+
+    public Texture getSeed() {
+        return seed;
     }
 }

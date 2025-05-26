@@ -1,8 +1,10 @@
 package com.tildawn.Models;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.tildawn.Models.Enums.Enemies;
 
@@ -17,15 +19,20 @@ public class Enemy {
     private float y;
     private float speed;
     private boolean isSpawning;
+    private float lastShotTime = 0.0f;
 
     public Enemy(Enemies type, float x, float y) {
         this.type = type;
         this.hp = type.getHP();
         this.animation = type.getAnimation();
+        this.animation.setPlayMode(Animation.PlayMode.LOOP);
         this.animationSpawn = type.getSpawnAnimation();
         this.sprite = new Sprite();
         this.sprite.setPosition(x, y);
-        this.sprite.setSize(16, 16);
+        if (type.equals(Enemies.tree)){
+            this.sprite.setSize(30, 40);
+        }
+        else this.sprite.setSize(20, 20);
         this.time = 0f;
         this.speed = type.getMoveSpeed();
         this.isSpawning = true;
@@ -34,22 +41,20 @@ public class Enemy {
     public void update(float playerX, float playerY) {
         if (isSpawning) {
             sprite.setRegion(animationSpawn.getKeyFrame(time));
-            time += com.badlogic.gdx.Gdx.graphics.getDeltaTime();
-
             if (animationSpawn.isAnimationFinished(time)) {
                 isSpawning = false;
-                time = 0f; // reset for regular animation
+                time = 0f;
             }
-            return; // don't move yet during spawn animation
+        } else {
+            // Move toward player
+            Vector2 direction = new Vector2(playerX - sprite.getX(), playerY - sprite.getY()).nor();
+            sprite.translate(direction.x * speed, direction.y * speed);
+
+            sprite.setRegion(animation.getKeyFrame(time));
         }
-
-        // Move toward player
-        Vector2 direction = new Vector2(playerX - sprite.getX(), playerY - sprite.getY()).nor();
-        sprite.translate(direction.x * speed, direction.y * speed);
-
-        // Play main animation
-        sprite.setRegion(animation.getKeyFrame(time, true));
-        time += com.badlogic.gdx.Gdx.graphics.getDeltaTime();
+        x = sprite.getX();
+        y = sprite.getY();
+        time += Gdx.graphics.getDeltaTime();
     }
 
     public Sprite getSprite() {
@@ -74,5 +79,29 @@ public class Enemy {
 
     public boolean isSpawning() {
         return isSpawning;
+    }
+
+    public float getX() {
+        return x;
+    }
+
+    public float getY() {
+        return y;
+    }
+
+    public float getSpeed() {
+        return speed;
+    }
+
+    public Rectangle getBounds() {
+        return sprite.getBoundingRectangle();
+    }
+
+    public float getLastShotTime() {
+        return lastShotTime;
+    }
+
+    public void setLastShotTime(float lastShotTime) {
+        this.lastShotTime = lastShotTime;
     }
 }

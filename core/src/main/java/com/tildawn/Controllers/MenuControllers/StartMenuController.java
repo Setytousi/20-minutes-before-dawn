@@ -16,10 +16,14 @@ public class StartMenuController {
     public void handleStartMenuButtons(){
         if (view != null) {
             if (view.getRegisterButton().isChecked()){
+                GameAssetManager.getGameAssetManager().getUIclick().setVolume(0.5f);
+                GameAssetManager.getGameAssetManager().getUIclick().play();
                 Main.getMain().getScreen().dispose();
                 Main.getMain().setScreen(new RegisterMenuView(new RegisterMenuController(), GameAssetManager.getGameAssetManager().getSkin()));
             }
             else if (view.getLoginButton().isChecked()){
+                GameAssetManager.getGameAssetManager().getUIclick().setVolume(0.5f);
+                GameAssetManager.getGameAssetManager().getUIclick().play();
                 Main.getMain().getScreen().dispose();
                 Main.getMain().setScreen(new LoginMenuView(new LoginMenuController(), GameAssetManager.getGameAssetManager().getSkin()));
             }

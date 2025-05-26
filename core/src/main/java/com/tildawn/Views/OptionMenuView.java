@@ -3,12 +3,16 @@ package com.tildawn.Views;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.tildawn.Controllers.MenuControllers.OptionMenuController;
 import com.tildawn.Main;
 import com.tildawn.Models.App;
+import com.tildawn.Models.Game;
+import com.tildawn.Models.GameAssetManager;
 
 public class OptionMenuView implements Screen {
     private OptionMenuController controller;
@@ -94,6 +98,23 @@ public class OptionMenuView implements Screen {
 
         table.add(backButton).width(300).height(60).padLeft(200);
         table.row().pad(15, 0, 0, 0);
+
+
+        musicSelectBox.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                App.getLoggedInUser().setMusic(musicSelectBox.getSelectedIndex());
+                GameAssetManager.getGameAssetManager().getBackgroundMusic().dispose();
+                if (App.getLoggedInUser().getMusic() == 1) {
+                    GameAssetManager.getGameAssetManager().setBackgroundMusic(GameAssetManager.getGameAssetManager().getBgMusic2());
+                }
+                else {
+                    GameAssetManager.getGameAssetManager().setBackgroundMusic(GameAssetManager.getGameAssetManager().getBgMusic1());
+                }
+                GameAssetManager.getGameAssetManager().getBackgroundMusic().setLooping(true);
+                GameAssetManager.getGameAssetManager().getBackgroundMusic().play();
+            }
+        });
 
         stage.addActor(table);
         com.badlogic.gdx.Gdx.input.setInputProcessor(stage);

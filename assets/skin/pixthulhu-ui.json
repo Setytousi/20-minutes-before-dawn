@@ -8,7 +8,8 @@ com.badlogic.gdx.graphics.g2d.BitmapFont: {
 	}
 	title: {
 		file: font-title-export.fnt
-	}
+	},
+
 }
 com.badlogic.gdx.graphics.Color: {
 	black: {
@@ -146,7 +147,27 @@ com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	title: {
 		font: title
 		fontColor: white
-	}
+	},
+    loggedin: {
+      font: font,
+      fontColor: blue
+    },
+    highlight: {
+      font: font,
+      fontColor: highlight
+    },
+    gold: {
+      font: font,
+      fontColor: { r: 1, g: 0.84, b: 0, a: 1 }
+    },
+    silver: {
+      font: font,
+      fontColor: { r: 0.75, g: 0.75, b: 0.75, a: 1 }
+    },
+    bronze: {
+      font: font,
+      fontColor: { r: 0.80, g: 0.50, b: 0.20, a: 1 }
+    }
 }
 com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle: {
 	default: {

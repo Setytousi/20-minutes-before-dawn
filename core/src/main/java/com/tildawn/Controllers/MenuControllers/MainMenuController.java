@@ -16,6 +16,8 @@ public class MainMenuController {
     public void handleMainMenuButtons(){
         if (view != null) {
             if (view.getLogout().isChecked()){
+                GameAssetManager.getGameAssetManager().getUIclick().setVolume(0.5f);
+                GameAssetManager.getGameAssetManager().getUIclick().play();
                 if (!App.getLoggedInUser().getUsername().equals("guest")) {
                     App.getLoggedInUser().setSavedGame(App.getCurrentGame());
                 }
@@ -24,25 +26,37 @@ public class MainMenuController {
                 Main.getMain().setScreen(new StartMenuView(new StartMenuController(), GameAssetManager.getGameAssetManager().getSkin()));
             }
             else if (view.getOptions().isChecked()){
+                GameAssetManager.getGameAssetManager().getUIclick().setVolume(0.5f);
+                GameAssetManager.getGameAssetManager().getUIclick().play();
                 Main.getMain().getScreen().dispose();
                 Main.getMain().setScreen(new OptionMenuView(new OptionMenuController(), GameAssetManager.getGameAssetManager().getSkin()));
             }
             else if (view.getProfile().isChecked()){
+                GameAssetManager.getGameAssetManager().getUIclick().setVolume(0.5f);
+                GameAssetManager.getGameAssetManager().getUIclick().play();
                 Main.getMain().getScreen().dispose();
                 Main.getMain().setScreen(new ProfileMenuView(new ProfileMenuController(), GameAssetManager.getGameAssetManager().getSkin()));
             }
             else if (view.getScoreBoard().isChecked()){
+                GameAssetManager.getGameAssetManager().getUIclick().setVolume(0.5f);
+                GameAssetManager.getGameAssetManager().getUIclick().play();
                 Main.getMain().getScreen().dispose();
                 Main.getMain().setScreen(new ScoreBoardMenuView(new ScoreBoardMenuController(), GameAssetManager.getGameAssetManager().getSkin()));
             }
             else if (view.getTalentMenu().isChecked()){
+                GameAssetManager.getGameAssetManager().getUIclick().setVolume(0.5f);
+                GameAssetManager.getGameAssetManager().getUIclick().play();
                 //TODO
             }
             else if (view.getNewGame().isChecked()){
+                GameAssetManager.getGameAssetManager().getUIclick().setVolume(0.5f);
+                GameAssetManager.getGameAssetManager().getUIclick().play();
                 Main.getMain().getScreen().dispose();
                 Main.getMain().setScreen(new PreGameMenuView(new PreGameMenuController(), GameAssetManager.getGameAssetManager().getSkin()));
             }
             else if (view.getResumeGame().isChecked()){
+                GameAssetManager.getGameAssetManager().getUIclick().setVolume(0.5f);
+                GameAssetManager.getGameAssetManager().getUIclick().play();
                 //TODO
             }
         }

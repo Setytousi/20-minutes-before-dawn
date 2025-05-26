@@ -13,6 +13,8 @@ public class ScoreBoardMenuController {
     }
 
     public void handleBackButton() {
+        GameAssetManager.getGameAssetManager().getUIclick().setVolume(0.5f);
+        GameAssetManager.getGameAssetManager().getUIclick().play();
         Main.getMain().getScreen().dispose();
         Main.getMain().setScreen(new MainMenuView(new MainMenuController(), GameAssetManager.getGameAssetManager().getSkin()));
     }

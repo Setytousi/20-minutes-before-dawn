@@ -4,8 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.tildawn.Main;
-import com.tildawn.Models.App;
-import com.tildawn.Models.Player;
+import com.tildawn.Models.*;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class PlayerController {
     private Player player;
@@ -15,12 +17,52 @@ public class PlayerController {
     }
 
 
-    public void update(int mapWidth, int mapHeight) {
+    public void update(int mapWidth, int mapHeight, EnemyController enemyController) {
         player.getPlayerSprite().draw(Main.getBatch());
 
         if(player.isPlayerIdle()){
             idleAnimation();
         }
+
+        ArrayList<Bullet> enemyBullets = enemyController.getEnemyBullets();
+        ArrayList<Enemy> enemies = enemyController.getEnemies();
+
+        Iterator<Bullet> bulletIterator = enemyBullets.iterator();
+        while (bulletIterator.hasNext()) {
+            Bullet bullet = bulletIterator.next();
+            if (bullet.getBounds().overlaps(player.getPlayerSprite().getBoundingRectangle())) {
+                player.setPlayerHealth(player.getPlayerHealth() - 1);
+                GameAssetManager.getGameAssetManager().getPlayerDamage().play();
+                if (player.getPlayerHealth() <= 10) {
+                    GameAssetManager.getGameAssetManager().getLowHealthAlarm().play();
+                }
+                bulletIterator.remove();
+            }
+        }
+
+        for (Enemy enemy : enemies) {
+            if (!enemy.isSpawning() &&
+                enemy.getSprite().getBoundingRectangle().overlaps(player.getPlayerSprite().getBoundingRectangle())) {
+                player.setPlayerHealth(player.getPlayerHealth() - 1);
+                GameAssetManager.getGameAssetManager().getPlayerDamage().play();
+                if (player.getPlayerHealth() <= 10) {
+                    GameAssetManager.getGameAssetManager().getLowHealthAlarm().play();
+                }
+                break;
+            }
+        }
+
+        ArrayList<Seed> seeds = enemyController.getSeeds();
+        Iterator<Seed> seedIterator = seeds.iterator();
+        while (seedIterator.hasNext()) {
+            Seed seed = seedIterator.next();
+            if (seed.getBounds().overlaps(player.getPlayerSprite().getBoundingRectangle())) {
+                player.setPlayerHealth(player.getPlayerHealth() + 3);
+                GameAssetManager.getGameAssetManager().getHealSound().play();
+                seed.setUsed(true);
+            }
+        }
+
 
         handlePlayerInput(mapWidth, mapHeight);
     }
@@ -28,16 +70,20 @@ public class PlayerController {
     public void handlePlayerInput(int mapWidth, int mapHeight) {
         if (Gdx.input.isKeyPressed(App.getLoggedInUser().getDown())){
             player.setPosY(player.getPosY() - player.getSpeed());
+            GameAssetManager.getGameAssetManager().getWalkSound().play();
         }
         if (Gdx.input.isKeyPressed(App.getLoggedInUser().getLeft())){
             player.setPosX(player.getPosX() - player.getSpeed());
             player.getPlayerSprite().flip(true, false);
+            GameAssetManager.getGameAssetManager().getWalkSound().play();
         }
         if (Gdx.input.isKeyPressed(App.getLoggedInUser().getUp())){
             player.setPosY(player.getPosY() + player.getSpeed());
+            GameAssetManager.getGameAssetManager().getWalkSound().play();
         }
         if (Gdx.input.isKeyPressed(App.getLoggedInUser().getRight())){
             player.setPosX(player.getPosX() + player.getSpeed());
+            GameAssetManager.getGameAssetManager().getWalkSound().play();
         }
 
         float bgX = 0;

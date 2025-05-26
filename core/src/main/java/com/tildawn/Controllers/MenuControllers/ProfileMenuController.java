@@ -19,7 +19,8 @@ public class ProfileMenuController {
         if (view == null) return;
 
         if (view.getBackButton().isChecked()) {
-            // ✅ Use dropdown avatar only if no custom avatar was uploaded
+            GameAssetManager.getGameAssetManager().getUIclick().setVolume(0.5f);
+            GameAssetManager.getGameAssetManager().getUIclick().play();
             if (!view.hasCustomAvatar()) {
                 switch (view.getAvatarSelectBox().getSelectedIndex()) {
                     case 0:
@@ -42,6 +43,8 @@ public class ProfileMenuController {
         }
 
         else if (view.getChangePasswordButton().isChecked()) {
+            GameAssetManager.getGameAssetManager().getUIclick().setVolume(0.5f);
+            GameAssetManager.getGameAssetManager().getUIclick().play();
             ProfileMenuView view2 = new ProfileMenuView(new ProfileMenuController(), GameAssetManager.getGameAssetManager().getSkin());
             String password = view.getNewPasswordTextField().getText().trim();
 
@@ -59,6 +62,8 @@ public class ProfileMenuController {
         }
 
         else if (view.getChangeUsernameButton().isChecked()) {
+            GameAssetManager.getGameAssetManager().getUIclick().setVolume(0.5f);
+            GameAssetManager.getGameAssetManager().getUIclick().play();
             ProfileMenuView view2 = new ProfileMenuView(new ProfileMenuController(), GameAssetManager.getGameAssetManager().getSkin());
             String username = view.getNewUsernameTextField().getText().trim();
             if (username.isEmpty()) {
@@ -85,6 +90,8 @@ public class ProfileMenuController {
         }
 
         else if (view.getDeleteAccountButton().isChecked()) {
+            GameAssetManager.getGameAssetManager().getUIclick().setVolume(0.5f);
+            GameAssetManager.getGameAssetManager().getUIclick().play();
             App.removeUser(App.getLoggedInUser());
             App.setLoggedInUser(null);
             Main.getMain().getScreen().dispose();

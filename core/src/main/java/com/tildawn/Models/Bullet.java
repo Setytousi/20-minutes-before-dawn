@@ -3,6 +3,8 @@ package com.tildawn.Models;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Rectangle;
+
 
 import javax.swing.*;
 
@@ -18,7 +20,7 @@ public class Bullet {
         this.sprite.setPosition(x, y);
         this.x = x;
         this.y = y;
-        sprite.setSize(2, 2);
+        sprite.setSize(20, 15);
         this.direction = direction;
     }
 
@@ -59,8 +61,11 @@ public class Bullet {
         this.direction = direction;
     }
 
-
     public Vector2 getDirection() {
         return direction;
+    }
+
+    public Rectangle getBounds() {
+        return sprite.getBoundingRectangle();
     }
 }

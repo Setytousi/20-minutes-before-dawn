@@ -18,6 +18,8 @@ public class LoginMenuController {
         if (view != null) {
             LoginMenuView loginMenuView2 = new LoginMenuView(new LoginMenuController(), GameAssetManager.getGameAssetManager().getSkin());
             if (view.getLoginButton().isChecked()){
+                GameAssetManager.getGameAssetManager().getUIclick().setVolume(0.5f);
+                GameAssetManager.getGameAssetManager().getUIclick().play();
                 String username = view.getUsernameButton().getText().trim();
                 String password = view.getPasswordButton().getText().trim();
 
@@ -48,12 +50,16 @@ public class LoginMenuController {
                 Main.getMain().setScreen(loginMenuView2);
             }
             else if (view.getGuestButton().isChecked()){
+                GameAssetManager.getGameAssetManager().getUIclick().setVolume(0.5f);
+                GameAssetManager.getGameAssetManager().getUIclick().play();
                 User user = new User("guest", "guest", "guest");
                 App.setLoggedInUser(user);
                 Main.getMain().getScreen().dispose();
                 Main.getMain().setScreen(new MainMenuView(new MainMenuController(), GameAssetManager.getGameAssetManager().getSkin()));
             }
             else if (view.getChangePasswordButton().isChecked()){
+                GameAssetManager.getGameAssetManager().getUIclick().setVolume(0.5f);
+                GameAssetManager.getGameAssetManager().getUIclick().play();
                 String username = view.getUsernameForgetButton().getText().trim();
                 String password = view.getPasswordForgetButton().getText().trim();
                 String answer = view.getSecurityQuestionForgetButton().getText().trim();
@@ -90,6 +96,8 @@ public class LoginMenuController {
                 Main.getMain().setScreen(loginMenuView2);
             }
             else if (view.getExitMenuButton().isChecked()){
+                GameAssetManager.getGameAssetManager().getUIclick().setVolume(0.5f);
+                GameAssetManager.getGameAssetManager().getUIclick().play();
                 Main.getMain().getScreen().dispose();
                 Main.getMain().setScreen(new StartMenuView(new StartMenuController(), GameAssetManager.getGameAssetManager().getSkin()));
             }

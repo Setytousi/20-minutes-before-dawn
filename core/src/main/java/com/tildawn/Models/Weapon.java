@@ -13,7 +13,7 @@ public class Weapon {
         texture = App.getLoggedInUser().getWeaponType().getTexture();
         sprite = new Sprite(texture);
         ammo = App.getLoggedInUser().getWeaponType().getAmmoMax();
-        sprite.setSize(10, 10);
+        sprite.setSize(15, 15);
         timeReload = App.getLoggedInUser().getWeaponType().getTimeReload();
     }
 

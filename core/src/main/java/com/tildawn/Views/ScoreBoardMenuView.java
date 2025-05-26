@@ -39,29 +39,25 @@ public class ScoreBoardMenuView implements Screen {
         this.table = new Table();
         this.menuLabel = new Label("ScoreBoard", skin, "title");
         this.backButton = new TextButton("Back", skin);
-        this.controller.setView(this);
-        this.users = new ArrayList<>();
-        for (User user : App.getUsers()) {
-            this.users.add(user);
-        }
+        this.users = new ArrayList<>(App.getUsers());
         users.sort(Comparator.comparing(User::getUsername));
     }
 
     private void sortUsersByUsername() {
         users.sort(Comparator.comparing(User::getUsername));
     }
+
     private void sortUsersByScore() {
-        users.sort(Comparator.comparing(User::getScore));
+        users.sort(Comparator.comparing(User::getScore).reversed());
     }
+
     private void sortUsersByKills() {
-        users.sort(Comparator.comparing(User::getKillNumber));
+        users.sort(Comparator.comparing(User::getKillNumber).reversed());
     }
+
     private void sortUsersByMaxAliveTime() {
-        users.sort(Comparator.comparing(User::getMaxAliveTime));
+        users.sort(Comparator.comparing(User::getMaxAliveTime).reversed());
     }
-
-
-
 
     @Override
     public void show() {
@@ -73,7 +69,7 @@ public class ScoreBoardMenuView implements Screen {
 
         sortDropdown.addListener(new ChangeListener() {
             @Override
-            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+            public void changed(ChangeEvent event, Actor actor) {
                 switch (sortDropdown.getSelectedIndex()) {
                     case 0: sortUsersByUsername(); break;
                     case 1: sortUsersByScore(); break;
@@ -90,7 +86,6 @@ public class ScoreBoardMenuView implements Screen {
                 controller.handleBackButton();
             }
         });
-
 
         stage.addActor(table);
     }
@@ -112,22 +107,11 @@ public class ScoreBoardMenuView implements Screen {
         table.add(new Label("Max Alive Time", skin)).pad(10);
         table.row();
 
-        // Rows
-        int count = Math.min(users.size(), 10);
-        for (int i = 0; i < count; i++) {
-            User user = users.get(i);
-            table.add(new Label(user.getUsername(), skin)).pad(10);
-            table.add(new Label(String.valueOf(user.getScore()), skin)).pad(10);
-            table.add(new Label(String.valueOf(user.getKillNumber()), skin)).pad(10);
-            table.add(new Label(String.valueOf(user.getMaxAliveTime()), skin)).pad(10);
-            table.row();
-        }
+        renderUserRows();
 
-        // Back button
         table.row().padTop(30);
         table.add(backButton).colspan(4).center();
     }
-
 
     private void refreshUserRows() {
         table.clear();
@@ -139,29 +123,44 @@ public class ScoreBoardMenuView implements Screen {
         table.add(sortDropdown).colspan(4).center();
         table.row().padTop(20);
 
-        // Header
+        // Headers
         table.add(new Label("Username", skin)).pad(10);
         table.add(new Label("Score", skin)).pad(10);
         table.add(new Label("Kills", skin)).pad(10);
         table.add(new Label("Max Alive Time", skin)).pad(10);
         table.row();
 
-        // Rows
-        int count = Math.min(users.size(), 10);
-        for (int i = 0; i < count; i++) {
-            User user = users.get(i);
-            table.add(new Label(user.getUsername(), skin)).pad(10);
-            table.add(new Label(String.valueOf(user.getScore()), skin)).pad(10);
-            table.add(new Label(String.valueOf(user.getKillNumber()), skin)).pad(10);
-            table.add(new Label(String.valueOf(user.getMaxAliveTime()), skin)).pad(10);
-            table.row();
-        }
+        renderUserRows();
 
         table.row().padTop(30);
         table.add(backButton).colspan(4).center();
     }
 
+    private void renderUserRows() {
+        int count = Math.min(users.size(), 10);
+        for (int i = 0; i < count; i++) {
+            User user = users.get(i);
+            Label.LabelStyle style;
 
+            if (user.getUsername().equals(App.getLoggedInUser().getUsername())) {
+                style = skin.get("loggedin", Label.LabelStyle.class);
+            } else if (i == 0) {
+                style = skin.get("gold", Label.LabelStyle.class);
+            } else if (i == 1) {
+                style = skin.get("silver", Label.LabelStyle.class);
+            } else if (i == 2) {
+                style = skin.get("bronze", Label.LabelStyle.class);
+            } else {
+                style = skin.get(Label.LabelStyle.class);
+            }
+
+            table.add(new Label(user.getUsername(), style)).pad(10);
+            table.add(new Label(String.valueOf(user.getScore()), style)).pad(10);
+            table.add(new Label(String.valueOf(user.getKillNumber()), style)).pad(10);
+            table.add(new Label(String.valueOf(user.getMaxAliveTime()), style)).pad(10);
+            table.row();
+        }
+    }
 
     @Override
     public void render(float delta) {
@@ -177,14 +176,9 @@ public class ScoreBoardMenuView implements Screen {
         stage.getViewport().update(width, height, true);
     }
 
-    @Override
-    public void pause() {}
-
-    @Override
-    public void resume() {}
-
-    @Override
-    public void hide() {}
+    @Override public void pause() {}
+    @Override public void resume() {}
+    @Override public void hide() {}
 
     @Override
     public void dispose() {
