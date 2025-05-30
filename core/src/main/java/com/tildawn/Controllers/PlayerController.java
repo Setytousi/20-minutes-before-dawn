@@ -3,10 +3,12 @@ package com.tildawn.Controllers;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.tildawn.Controllers.MenuControllers.StartMenuController;
 import com.tildawn.Main;
 import com.tildawn.Models.*;
 import com.tildawn.Views.ChooseAbilityView;
 import com.tildawn.Views.GameView;
+import com.tildawn.Views.StartMenuView;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -96,8 +98,9 @@ public class PlayerController {
                 GameAssetManager.getGameAssetManager().getHealSound().play();
                 seed.setUsed(true);
                 if (player.getLevel() > currentLevel) {
-                    Main.getMain().getScreen().dispose();
-                    Main.getMain().setScreen(new ChooseAbilityView(GameAssetManager.getGameAssetManager().getSkin(), gameView));
+                    if (player.getLevel() > currentLevel) {
+                        gameView.setNextScreen(new ChooseAbilityView(GameAssetManager.getGameAssetManager().getSkin(), gameView));
+                    }
                 }
             }
         }

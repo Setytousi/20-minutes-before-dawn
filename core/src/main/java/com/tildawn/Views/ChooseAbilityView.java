@@ -34,9 +34,12 @@ public class ChooseAbilityView implements Screen {
         ability1 = rand.nextInt(2);
         ability2 = rand.nextInt(2) + 2;
         ability3 = 4;
-        ability1Button = new TextButton((ability1 == 0 ? "VITALITY (max Hp increses by 1)" : "DAMAGER (adds to weapon damage for 10 secs"), skin, "subtitle");
-        ability2Button = new TextButton((ability2 == 2 ? "PROCREASE (adds to weapons projectile)" : "AMOCREASE (increases max ammo by 5)"), skin, "subtitle");
-        ability3Button = new TextButton("SPEEDY (increases speed)", skin, "subtitle");
+        ability1 = 0;
+        ability2 = 2;
+        ability3 = 3;
+        ability1Button = new TextButton(ability1 == 0 ? "VITALITY (max Hp increses by 1)" : "DAMAGER (adds to weapon damage for 10 secs)", skin);
+        ability2Button = new TextButton(ability2 == 2 ? "PROCREASE (adds to weapons projectile)" : "AMOCREASE (increases max ammo by 5)", skin);
+        ability3Button = new TextButton("SPEEDY (increases speed)", skin);
         chooseAbilityLabel = new Label("Choose Ability", skin, "title");
     }
 

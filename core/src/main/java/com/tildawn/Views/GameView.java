@@ -18,6 +18,8 @@ public class GameView implements Screen, InputProcessor {
     private Stage stage;
     private GameController controller;
     private OrthographicCamera camera;
+    private Screen nextScreen = null;
+
 
     public GameView(GameController controller, Skin skin) {
         this.controller = controller;
@@ -73,6 +75,13 @@ public class GameView implements Screen, InputProcessor {
         Main.getBatch().end();
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
+
+        if (nextScreen != null) {
+            dispose();
+            Main.getMain().setScreen(nextScreen);
+            nextScreen = null;
+        }
+
     }
 
     @Override
@@ -159,4 +168,9 @@ public class GameView implements Screen, InputProcessor {
     public GameController getController() {
         return controller;
     }
+
+    public void setNextScreen(Screen screen) {
+        this.nextScreen = screen;
+    }
+
 }

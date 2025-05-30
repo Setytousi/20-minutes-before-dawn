@@ -128,9 +128,9 @@ public class Player {
         Xp = xp;
         int level = 1;
         int tmp = xp;
-        while (tmp >= 1 * level) {
+        while (tmp >= 10 * level) {
             level++;
-            tmp -= 1 * level;
+            tmp -= 10 * level;
         }
         this.level = level;
     }
