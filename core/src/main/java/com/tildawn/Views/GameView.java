@@ -155,4 +155,8 @@ public class GameView implements Screen, InputProcessor {
     public boolean scrolled(float v, float v1) {
         return false;
     }
+
+    public GameController getController() {
+        return controller;
+    }
 }

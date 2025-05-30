@@ -21,9 +21,11 @@ public class EnemyController {
     private float eps = 0.1f;
     private float tentacleTime = 0;
     private float elderTime = 0;
+    private GameController gameController;
 
-    public EnemyController(int totalTime, int mapWidth, int mapHeight) {
+    public EnemyController(int totalTime, int mapWidth, int mapHeight, GameController gameController) {
         this.totalTime = totalTime * 60;
+        this.gameController = gameController;
         spawnInitialTrees(10, mapWidth, mapHeight);
     }
 
@@ -70,6 +72,9 @@ public class EnemyController {
                 Bullet bullet = bulletIterator.next();
                 if (bullet.getBounds().overlaps(enemy.getBounds()) && !enemy.isSpawning()) {
                     enemy.takeDamage(App.getLoggedInUser().getWeaponType().getDamage());
+                    if (gameController.getPlayerController().isDamager()){
+                        enemy.takeDamage(App.getLoggedInUser().getWeaponType().getDamage() / 4f);
+                    }
                     bulletIterator.remove();
                     break;
                 }

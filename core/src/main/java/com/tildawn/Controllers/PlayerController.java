@@ -5,22 +5,50 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.tildawn.Main;
 import com.tildawn.Models.*;
+import com.tildawn.Views.ChooseAbilityView;
+import com.tildawn.Views.GameView;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
 public class PlayerController {
     private Player player;
+    private Float speedyTimer = 0f;
+    private Float damagerTimer = 0f;
+    private boolean speedy = false;
+    private boolean damager = false;
+    private Float hpTimer = 0f;
 
     public PlayerController(Player player){
         this.player = player;
     }
 
 
-    public void update(int mapWidth, int mapHeight, EnemyController enemyController) {
+    public void update(int mapWidth, int mapHeight, EnemyController enemyController, GameView gameView, float deltaTime) {
+
+        if (speedy) {
+            speedyTimer += deltaTime;
+            if (speedyTimer > 10f) {
+                speedy = false;
+                speedyTimer = 0f;
+            }
+        }
+        if (damager) {
+            damagerTimer += deltaTime;
+            if (damagerTimer > 10f) {
+                damager = false;
+                damagerTimer = 0f;
+            }
+        }
+        hpTimer += deltaTime;
+        if (hpTimer > 30f) {
+            player.setPlayerHealth(player.getPlayerHealth() + 1);
+            hpTimer = 0f;
+        }
+
         player.getPlayerSprite().draw(Main.getBatch());
 
-        if(player.isPlayerIdle()){
+        if (player.isPlayerIdle()){
             idleAnimation();
         }
 
@@ -36,6 +64,9 @@ public class PlayerController {
                 if (player.getPlayerHealth() <= 10) {
                     GameAssetManager.getGameAssetManager().getLowHealthAlarm().play();
                 }
+                if (player.getPlayerHealth() <= 0){
+                    //TODO lose
+                }
                 bulletIterator.remove();
             }
         }
@@ -48,6 +79,9 @@ public class PlayerController {
                 if (player.getPlayerHealth() <= 10) {
                     GameAssetManager.getGameAssetManager().getLowHealthAlarm().play();
                 }
+                if (player.getPlayerHealth() <= 0){
+                    //TODO lose
+                }
                 break;
             }
         }
@@ -57,9 +91,14 @@ public class PlayerController {
         while (seedIterator.hasNext()) {
             Seed seed = seedIterator.next();
             if (seed.getBounds().overlaps(player.getPlayerSprite().getBoundingRectangle())) {
-                player.setPlayerHealth(player.getPlayerHealth() + 3);
+                int currentLevel = player.getLevel();
+                player.setXp(player.getXp() + 1);
                 GameAssetManager.getGameAssetManager().getHealSound().play();
                 seed.setUsed(true);
+                if (player.getLevel() > currentLevel) {
+                    Main.getMain().getScreen().dispose();
+                    Main.getMain().setScreen(new ChooseAbilityView(GameAssetManager.getGameAssetManager().getSkin(), gameView));
+                }
             }
         }
 
@@ -69,20 +108,20 @@ public class PlayerController {
 
     public void handlePlayerInput(int mapWidth, int mapHeight) {
         if (Gdx.input.isKeyPressed(App.getLoggedInUser().getDown())){
-            player.setPosY(player.getPosY() - player.getSpeed());
+            player.setPosY(player.getPosY() - player.getSpeed() * (speedy ? 2 : 1));
             GameAssetManager.getGameAssetManager().getWalkSound().play();
         }
         if (Gdx.input.isKeyPressed(App.getLoggedInUser().getLeft())){
-            player.setPosX(player.getPosX() - player.getSpeed());
+            player.setPosX(player.getPosX() - player.getSpeed() * (speedy ? 2 : 1));
             player.getPlayerSprite().flip(true, false);
             GameAssetManager.getGameAssetManager().getWalkSound().play();
         }
         if (Gdx.input.isKeyPressed(App.getLoggedInUser().getUp())){
-            player.setPosY(player.getPosY() + player.getSpeed());
+            player.setPosY(player.getPosY() + player.getSpeed() * (speedy ? 2 : 1));
             GameAssetManager.getGameAssetManager().getWalkSound().play();
         }
         if (Gdx.input.isKeyPressed(App.getLoggedInUser().getRight())){
-            player.setPosX(player.getPosX() + player.getSpeed());
+            player.setPosX(player.getPosX() + player.getSpeed() * (speedy ? 2 : 1));
             GameAssetManager.getGameAssetManager().getWalkSound().play();
         }
 
@@ -125,5 +164,29 @@ public class PlayerController {
 
     public Player getPlayer() {
         return player;
+    }
+
+    public Float getSpeedyTimer() {
+        return speedyTimer;
+    }
+
+    public Float getDamagerTimer() {
+        return damagerTimer;
+    }
+
+    public boolean isSpeedy() {
+        return speedy;
+    }
+
+    public boolean isDamager() {
+        return damager;
+    }
+
+    public void setSpeedy(boolean speedy) {
+        this.speedy = speedy;
+    }
+
+    public void setDamager(boolean damager) {
+        this.damager = damager;
     }
 }

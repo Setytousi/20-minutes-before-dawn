@@ -232,4 +232,5 @@ public class User {
     public void setGameTime(int gameTime) {
         this.gameTime = gameTime;
     }
+
 }

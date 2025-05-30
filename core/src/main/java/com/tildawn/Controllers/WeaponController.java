@@ -21,8 +21,10 @@ public class WeaponController {
     private boolean isReloading = false;
     private Weapon weapon;
     private ArrayList<Bullet> bullets = new ArrayList<>();
+    private GameController gameController;
 
-    public WeaponController(Weapon weapon){
+    public WeaponController(Weapon weapon, GameController gameController) {
+        this.gameController = gameController;
         this.weapon = weapon;
         this.timeReload = weapon.getTimeReload();
     }
@@ -101,7 +103,7 @@ public class WeaponController {
         // Base direction
         Vector2 baseDirection = new Vector2(mouseWorldX - weaponCenterX, mouseWorldY - weaponCenterY).nor();
 
-        int projectileCount = App.getLoggedInUser().getWeaponType().getProjectile();
+        int projectileCount = App.getLoggedInUser().getWeaponType().getProjectile() + gameController.getPlayerController().getPlayer().getProjectileAdded();
         float spreadAngle = 1f;
 
         for (int i = 0; i < projectileCount; i++) {
@@ -119,7 +121,7 @@ public class WeaponController {
         isReloading = true;
         canShoot = false;
         reloadEndTime = TimeUtils.nanoTime() + (long)(timeReload * 1_000_000_000L);
-        weapon.setAmmo(App.getLoggedInUser().getWeaponType().getAmmoMax());
+        weapon.setAmmo(App.getLoggedInUser().getWeaponType().getAmmoMax() + gameController.getPlayerController().getPlayer().getAmmoMaxAdded());
     }
 
 
