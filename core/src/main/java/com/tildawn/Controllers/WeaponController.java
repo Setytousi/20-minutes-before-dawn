@@ -4,11 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.tildawn.Main;
-import com.tildawn.Models.App;
-import com.tildawn.Models.Bullet;
-import com.tildawn.Models.GameAssetManager;
-import com.tildawn.Models.Weapon;
+import com.tildawn.Models.*;
 import com.badlogic.gdx.math.Vector2;
+import com.tildawn.Models.Enums.Enemies;
 
 
 import java.util.ArrayList;
@@ -29,7 +27,7 @@ public class WeaponController {
         this.timeReload = weapon.getTimeReload();
     }
 
-    public void update(float playerX, float playerY){
+    public void update(float playerX, float playerY) {
         Sprite weaponSprite = weapon.getSprite();
 
         float offsetX = 16f;
@@ -61,10 +59,10 @@ public class WeaponController {
     }
 
 
-    public void updateBullets(){
+    public void updateBullets() {
         Iterator<Bullet> iterator = bullets.iterator();
 
-        while(iterator.hasNext()){
+        while (iterator.hasNext()) {
             Bullet b = iterator.next();
             Sprite bulletSprite = b.getSprite();
             Vector2 direction = b.getDirection();
@@ -88,7 +86,7 @@ public class WeaponController {
         Sprite weaponSprite = weapon.getSprite();
 
         if (weapon.getAmmo() <= 0) {
-            if (App.getLoggedInUser().isAutoReload()){
+            if (App.getLoggedInUser().isAutoReload()) {
                 startReload();
             }
             return;
@@ -116,11 +114,11 @@ public class WeaponController {
     }
 
 
-    public void startReload(){
+    public void startReload() {
         GameAssetManager.getGameAssetManager().getWeaponReload().play();
         isReloading = true;
         canShoot = false;
-        reloadEndTime = TimeUtils.nanoTime() + (long)(timeReload * 1_000_000_000L);
+        reloadEndTime = TimeUtils.nanoTime() + (long) (timeReload * 1_000_000_000L);
         weapon.setAmmo(App.getLoggedInUser().getWeaponType().getAmmoMax() + gameController.getPlayerController().getPlayer().getAmmoMaxAdded());
     }
 
@@ -131,5 +129,37 @@ public class WeaponController {
 
     public Weapon getWeapon() {
         return weapon;
+    }
+
+    public void autoAim(float playerX, float playerY) {
+        ArrayList<Enemy> enemies = gameController.getEnemyController().getEnemies();
+        if (enemies.isEmpty()) return;
+
+        Enemy closestEnemy = null;
+        float closestDistance = Float.MAX_VALUE;
+
+        for (Enemy enemy : enemies) {
+            if (enemy.isDead() || enemy.isSpawning() || enemy.getType().equals(Enemies.tree)) continue;
+
+            float enemyX = enemy.getX() + enemy.getSprite().getWidth() / 2f;
+            float enemyY = enemy.getY() + enemy.getSprite().getHeight() / 2f;
+            float distance = new Vector2(playerX, playerY).dst(enemyX, enemyY);
+
+            if (distance < closestDistance) {
+                closestDistance = distance;
+                closestEnemy = enemy;
+            }
+        }
+
+        if (closestEnemy != null) {
+            float weaponCenterX = playerX;
+            float weaponCenterY = playerY;
+
+            float enemyX = closestEnemy.getX() + closestEnemy.getSprite().getWidth() / 2f;
+            float enemyY = closestEnemy.getY() + closestEnemy.getSprite().getHeight() / 2f;
+            Vector2 direction = new Vector2(enemyX - weaponCenterX, enemyY - weaponCenterY).nor();
+
+            fireBullet(enemyX, enemyY);
+        }
     }
 }

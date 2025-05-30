@@ -2,7 +2,9 @@ package com.tildawn.Controllers;
 
 import com.tildawn.Main;
 import com.tildawn.Models.App;
+import com.tildawn.Models.GameAssetManager;
 import com.tildawn.Models.User;
+import com.tildawn.Views.LoseMenuView;
 import com.tildawn.Views.PauseMenuView;
 
 public class PauseMenuController {
@@ -19,7 +21,7 @@ public class PauseMenuController {
             if (user.isBlackAndWhite()){
                 Main.getBatch().setShader(Main.getGrayscaleShader());
             } else {
-                Main.getBatch().setShader(null); // reset to default
+                Main.getBatch().setShader(null);
             }
             Main.getMain().getScreen().dispose();
             Main.getMain().setScreen(view.getGameController().getView());
@@ -28,7 +30,8 @@ public class PauseMenuController {
             //TODO
         }
         else if (view.getGiveUpButton().isChecked()){
-            //TODO
+            Main.getMain().getScreen().dispose();
+            Main.getMain().setScreen(new LoseMenuView(view.getGameController(), GameAssetManager.getGameAssetManager().getSkin()));
         }
     }
 }

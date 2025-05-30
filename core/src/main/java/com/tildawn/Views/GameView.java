@@ -13,7 +13,9 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tildawn.Controllers.GameController;
 import com.tildawn.Controllers.PauseMenuController;
+import com.tildawn.Controllers.PlayerController;
 import com.tildawn.Main;
+import com.tildawn.Models.App;
 import com.tildawn.Models.GameAssetManager;
 import com.tildawn.Models.Player;
 
@@ -133,6 +135,15 @@ public class GameView implements Screen, InputProcessor {
         updateHud();
         hudStage.act(delta);
         hudStage.draw();
+
+        if (controller.getPlayerController().getPlayer().getPlayerHealth() <= 0){
+            Main.getMain().getScreen().dispose();
+            Main.getMain().setScreen(new LoseMenuView(controller, GameAssetManager.getGameAssetManager().getSkin()));
+        }
+        if (controller.getElapsedTime() > App.getLoggedInUser().getGameTime() * 60){
+            Main.getMain().getScreen().dispose();
+            Main.getMain().setScreen(new WinMenuView(controller, GameAssetManager.getGameAssetManager().getSkin()));
+        }
     }
 
     private void updateHud() {
@@ -172,6 +183,36 @@ public class GameView implements Screen, InputProcessor {
         if (i == Input.Keys.P) {
             Main.getMain().getScreen().dispose();
             Main.getMain().setScreen(new PauseMenuView(new PauseMenuController(), controller, GameAssetManager.getGameAssetManager().getSkin()));
+            return true;
+        }
+        if (i == Input.Keys.T) {
+            controller.setElapsedTime(controller.getElapsedTime() + 60f);
+            return true;
+        }
+        if (i == Input.Keys.L){
+            controller.getPlayerController().getPlayer().setXp(
+                controller.getPlayerController().getPlayer().getXp() + 10
+            );
+            Main.getMain().getScreen().dispose();
+            Main.getMain().setScreen(new ChooseAbilityView(GameAssetManager.getGameAssetManager().getSkin(), this));
+            return true;
+        }
+        if (i == Input.Keys.H){
+            if (controller.getPlayerController().getPlayer().getPlayerHealth() <= 0){
+                controller.getPlayerController().getPlayer().setPlayerHealth(10);
+            }
+            return true;
+        }
+        if (i == Input.Keys.F){
+            controller.getWeaponController().getWeapon().setAmmo(1000);
+            return true;
+        }
+        if (i == Input.Keys.SPACE){
+            controller.getWeaponController().autoAim(controller.getPlayerController().getPlayer().getPosX(), controller.getPlayerController().getPlayer().getPosY());
+            return true;
+        }
+        if (i == Input.Keys.B){
+            controller.setElapsedTime(Math.max(App.getLoggedInUser().getGameTime() * 30, controller.getElapsedTime()));
         }
         return false;
     }

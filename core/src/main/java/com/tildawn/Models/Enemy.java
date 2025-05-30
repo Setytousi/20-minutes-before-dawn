@@ -20,6 +20,10 @@ public class Enemy {
     private float speed;
     private boolean isSpawning;
     private float lastShotTime = 0.0f;
+    private boolean isTakingDamage = false;
+    private float damageTimer = 0.0f;
+    private boolean dead = false;
+    private float shootTimer = 0.0f;
 
     public Enemy(Enemies type, float x, float y) {
         this.type = type;
@@ -31,6 +35,9 @@ public class Enemy {
         this.sprite.setPosition(x, y);
         if (type.equals(Enemies.tree)){
             this.sprite.setSize(30, 40);
+        }
+        else if (type.equals(Enemies.elder)){
+            this.sprite.setSize(60, 70);
         }
         else this.sprite.setSize(20, 20);
         this.time = 0f;
@@ -59,10 +66,6 @@ public class Enemy {
 
     public Sprite getSprite() {
         return sprite;
-    }
-
-    public boolean isDead() {
-        return hp <= 0;
     }
 
     public void takeDamage(float amount) {
@@ -103,5 +106,40 @@ public class Enemy {
 
     public void setLastShotTime(float lastShotTime) {
         this.lastShotTime = lastShotTime;
+    }
+
+    public boolean isTakingDamage() {
+        return isTakingDamage;
+    }
+
+    public void setTakingDamage(boolean takingDamage) {
+        isTakingDamage = takingDamage;
+    }
+
+    public float getDamageTimer() {
+        return damageTimer;
+    }
+
+    public void setDamageTimer(float damageTimer) {
+        this.damageTimer = damageTimer;
+    }
+
+    public boolean isDead() {
+        return dead;
+    }
+
+    public void setDead(boolean dead) {
+        this.dead = dead;
+    }
+
+    public float getShootTimer() {
+        return shootTimer;
+    }
+
+    public void setShootTimer(float shootTimer) {
+        this.shootTimer = shootTimer;
+        if (shootTimer > 1f){
+            shootTimer = 0;
+        }
     }
 }

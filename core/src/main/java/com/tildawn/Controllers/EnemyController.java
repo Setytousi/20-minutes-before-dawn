@@ -1,5 +1,7 @@
 package com.tildawn.Controllers;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Vector2;
 import com.tildawn.Models.*;
 import com.badlogic.gdx.math.MathUtils;
@@ -22,11 +24,14 @@ public class EnemyController {
     private float tentacleTime = 0;
     private float elderTime = 0;
     private GameController gameController;
+    private Animation<Texture> damageAnimation;
+    boolean elderSpawned = false;
 
     public EnemyController(int totalTime, int mapWidth, int mapHeight, GameController gameController) {
         this.totalTime = totalTime * 60;
         this.gameController = gameController;
         spawnInitialTrees(10, mapWidth, mapHeight);
+        damageAnimation = GameAssetManager.getGameAssetManager().getEnemyDamageAnimation();
     }
 
     public void update(float delta, float playerX, float playerY, int mapWidth, int mapHeight, ArrayList<Bullet> bullets) {
@@ -41,16 +46,20 @@ public class EnemyController {
         }
         if (elapsedTime * 4 > totalTime){
             if (elderTime >= 10){
-                for (int i = 0; i < (4 * elapsedTime - totalTime + 30) / 30; i++){
+                for (int i = 0; i < (2 * elapsedTime - totalTime + 30) / 30; i++){
                     spawnEyebat(mapWidth, mapHeight);
                 }
                 elderTime = 0;
             }
         }
+        if (elapsedTime * 2 > totalTime && !elderSpawned){
+            spawnElder(mapWidth, mapHeight);
+        }
 
         Iterator<Enemy> iterator = enemies.iterator();
         while (iterator.hasNext()) {
             Enemy enemy = iterator.next();
+            if (enemy.getShootTimer() > 0f) enemy.setShootTimer(enemy.getShootTimer() + delta);
             enemy.update(playerX, playerY);
             if (enemy.getType() == Enemies.eyebat && !enemy.isSpawning()) {
                 if (elapsedTime - enemy.getLastShotTime() >= 5f) {
@@ -62,21 +71,52 @@ public class EnemyController {
                     enemy.setLastShotTime(elapsedTime);
                 }
             }
+            if (enemy.getType() == Enemies.elder && !enemy.isSpawning()) {
+                if (elapsedTime - enemy.getLastShotTime() >= 5f) {
+                    float ex = enemy.getX() + enemy.getSprite().getWidth() / 2f;
+                    float ey = enemy.getY() + enemy.getSprite().getHeight() / 2f;
+                    Vector2 dir = new Vector2(playerX - ex, playerY - ey).nor();
+                    Bullet bullet = new Bullet(ex, ey, dir);
+                    enemyBullets.add(bullet);
+                    enemy.setLastShotTime(elapsedTime);
+                }
+            }
+            if (enemy.isTakingDamage()){
+                Texture frame = damageAnimation.getKeyFrame(enemy.getDamageTimer());
+                Main.getBatch().draw(frame, enemy.getX(), enemy.getY(), enemy.getSprite().getWidth(), enemy.getSprite().getHeight());
+                enemy.setDamageTimer(enemy.getDamageTimer() + delta);
 
-            Sprite s = enemy.getSprite();
-            s.draw(Main.getBatch());
+                if (enemy.getDamageTimer() >= 0.6f){
+                    enemy.setDead(true);
+                    gameController.getPlayerController().getPlayer().setKills(gameController.getPlayerController().getPlayer().getKills() + 1);
+                    GameAssetManager.getGameAssetManager().getEnemyDeathSound().play();
+                    Seed seed = new Seed(enemy.getX(), enemy.getY());
+                    seeds.add(seed);
+                    iterator.remove();
+                }
+            }
+            else {
+                Sprite s = enemy.getSprite();
+                s.draw(Main.getBatch());
 
-            // Check collisions with bullets
-            Iterator<Bullet> bulletIterator = bullets.iterator();
-            while (bulletIterator.hasNext()) {
-                Bullet bullet = bulletIterator.next();
-                if (bullet.getBounds().overlaps(enemy.getBounds()) && !enemy.isSpawning()) {
-                    enemy.takeDamage(App.getLoggedInUser().getWeaponType().getDamage());
-                    if (gameController.getPlayerController().isDamager()){
-                        enemy.takeDamage(App.getLoggedInUser().getWeaponType().getDamage() / 4f);
+                // Check collisions with bullets
+                Iterator<Bullet> bulletIterator = bullets.iterator();
+                while (bulletIterator.hasNext()) {
+                    Bullet bullet = bulletIterator.next();
+                    if (bullet.getBounds().overlaps(enemy.getBounds()) && !enemy.isSpawning()) {
+                        enemy.takeDamage(App.getLoggedInUser().getWeaponType().getDamage());
+                        if (gameController.getPlayerController().isDamager()) {
+                            enemy.takeDamage(App.getLoggedInUser().getWeaponType().getDamage() / 4f);
+                        }
+                        if (enemy.getHp() <= 0f) {
+                            GameAssetManager.getGameAssetManager().getShootingSound().play();
+
+                            enemy.setTakingDamage(true);
+                            enemy.setDamageTimer(0f);
+                        }
+                        bulletIterator.remove();
+                        break;
                     }
-                    bulletIterator.remove();
-                    break;
                 }
             }
             Iterator<Bullet> enemyBulletIterator = enemyBullets.iterator();
@@ -86,23 +126,13 @@ public class EnemyController {
                 sprite.translate(b.getDirection().x * 0.1f, b.getDirection().y * 0.1f);
                 sprite.draw(Main.getBatch());
 
-                // Remove if off-screen
                 if (sprite.getX() < -50 || sprite.getX() > mapWidth + 50 ||
                     sprite.getY() < -50 || sprite.getY() > mapHeight + 50) {
                     enemyBulletIterator.remove();
                 }
             }
-
-
-            // Remove dead enemies
-            if (enemy.isDead()) {
-                gameController.getPlayerController().getPlayer().setKills(gameController.getPlayerController().getPlayer().getKills() + 1);
-                iterator.remove();
-                GameAssetManager.getGameAssetManager().getEnemyDeathSound().play();
-                Seed seed = new Seed(enemy.getX(), enemy.getY());
-                seeds.add(seed);
-            }
         }
+
         Iterator<Seed> seedIterator = seeds.iterator();
         while (seedIterator.hasNext()) {
             Seed seed = seedIterator.next();
@@ -185,6 +215,42 @@ public class EnemyController {
         }
         if (!check) {
             enemies.add(new Enemy(Enemies.tentacle, x, y));
+        }
+    }
+    private void spawnElder(int mapWidth, int mapHeight) {
+        float x, y;
+
+        int side = MathUtils.random(3); // 0=left, 1=top, 2=right, 3=bottom
+
+        switch (side) {
+            case 0: // left
+                x = 0;
+                y = MathUtils.random(0, mapHeight);
+                break;
+            case 1: // top
+                x = MathUtils.random(0, mapWidth);
+                y = mapHeight;
+                break;
+            case 2: // right
+                x = mapWidth;
+                y = MathUtils.random(0, mapHeight);
+                break;
+            case 3: // bottom
+                x = MathUtils.random(0, mapWidth);
+                y = 0;
+                break;
+            default:
+                x = y = 0;
+        }
+        boolean check = false;
+        for (Enemy enemy : enemies) {
+            if (abs(enemy.getX() - x) + abs(enemy.getY() - y) <= eps) {
+                check = true;
+            }
+        }
+        if (!check){
+            elderSpawned = true;
+            enemies.add(new Enemy(Enemies.elder, x, y));
         }
     }
 

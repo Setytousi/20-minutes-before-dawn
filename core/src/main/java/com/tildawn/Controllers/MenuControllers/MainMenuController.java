@@ -2,6 +2,7 @@ package com.tildawn.Controllers.MenuControllers;
 
 import com.tildawn.Main;
 import com.tildawn.Models.App;
+import com.tildawn.Models.Game;
 import com.tildawn.Models.GameAssetManager;
 import com.tildawn.Views.*;
 
@@ -46,7 +47,8 @@ public class MainMenuController {
             else if (view.getTalentMenu().isChecked()){
                 GameAssetManager.getGameAssetManager().getUIclick().setVolume(0.5f);
                 GameAssetManager.getGameAssetManager().getUIclick().play();
-                //TODO
+                Main.getMain().getScreen().dispose();
+                Main.getMain().setScreen(new HintMenuView(GameAssetManager.getGameAssetManager().getSkin()));
             }
             else if (view.getNewGame().isChecked()){
                 GameAssetManager.getGameAssetManager().getUIclick().setVolume(0.5f);

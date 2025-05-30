@@ -24,6 +24,12 @@ public class PauseMenuView implements Screen {
     private TextButton giveUpButton;
     private SelectBox<String> blackAndWhiteSelectBox;
     private TextButton saveAndExitButton;
+    private Label cheat1;
+    private Label cheat2;
+    private Label cheat3;
+    private Label cheat4;
+    private Label cheat5;
+    private Label cheatCode;
 
     public PauseMenuView(PauseMenuController controller, GameController gameController, Skin skin) {
         this.controller = controller;
@@ -49,6 +55,12 @@ public class PauseMenuView implements Screen {
         blackAndWhiteSelectBox.setItems("B & W", "COLOR");
         blackAndWhiteSelectBox.setSelectedIndex(App.getLoggedInUser().isBlackAndWhite() ? 0 : 1);
         saveAndExitButton = new TextButton("Save and Exit", skin);
+        cheatCode = new Label("Cheat Codes:", skin, "subtitle");
+        cheat1 = new Label("T : adds 1 minute to elapsed time", skin);
+        cheat2 = new Label("L : increases player level", skin);
+        cheat3 = new Label("H : adds health if health = 0", skin);
+        cheat4 = new Label("F : gives you 1000 ammo", skin);
+        cheat5 = new Label("B : boss fight", skin);
     }
 
     @Override
@@ -65,6 +77,19 @@ public class PauseMenuView implements Screen {
         table.add(ability2);
         table.add(ability3);
         table.row().pad(20, 0, 0, 0);
+
+        table.add(cheatCode);
+        table.row().pad(5, 0, 0, 0);
+        table.add(cheat1);
+        table.row();
+        table.add(cheat2);
+        table.row();
+        table.add(cheat3);
+        table.row();
+        table.add(cheat4);
+        table.row();
+        table.add(cheat5);
+        table.row().pad(5, 0, 0, 0);
 
         table.add(blackAndWhiteSelectBox);
         table.row().pad(50, 0, 0, 0);

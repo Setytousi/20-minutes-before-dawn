@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -99,6 +100,20 @@ public class GameAssetManager {
     private final Texture shanaIdle6 = new Texture(Gdx.files.internal("Heros/Shana/idle/Idle_5 #8307.png"));
     private final Animation<Texture> shanaIdleAnimation = new Animation<>(0.3f, shanaIdle1, shanaIdle2, shanaIdle3, shanaIdle4, shanaIdle5, shanaIdle6);
 
+    private final Texture damage1 = new Texture(Gdx.files.internal("Images_grouped_2/Sprite/HeartAnimation/HeartAnimation_0.png"));
+    private final Texture damage2 = new Texture(Gdx.files.internal("Images_grouped_2/Sprite/HeartAnimation/HeartAnimation_1.png"));
+    private final Texture damage3 = new Texture(Gdx.files.internal("Images_grouped_2/Sprite/HeartAnimation/HeartAnimation_2.png"));
+    private final Texture damage4 = new Texture(Gdx.files.internal("Images_grouped_2/Sprite/HeartAnimation/HeartAnimation_3.png"));
+    private final Animation<Texture> damageAnimation = new Animation<>(0.2f, damage1, damage2, damage3, damage4);
+
+    private final Texture enemyDamage1 = new Texture(Gdx.files.internal("Images_grouped_2/Texture2D/ExplosionFX/ExplosionFX_0.png"));
+    private final Texture enemyDamage2 = new Texture(Gdx.files.internal("Images_grouped_2/Texture2D/ExplosionFX/ExplosionFX_1.png"));
+    private final Texture enemyDamage3 = new Texture(Gdx.files.internal("Images_grouped_2/Texture2D/ExplosionFX/ExplosionFX_2.png"));
+    private final Texture enemyDamage4 = new Texture(Gdx.files.internal("Images_grouped_2/Texture2D/ExplosionFX/ExplosionFX_3.png"));
+    private final Texture enemyDamage5 = new Texture(Gdx.files.internal("Images_grouped_2/Texture2D/ExplosionFX/ExplosionFX_4.png"));
+    private final Texture enemyDamage6 = new Texture(Gdx.files.internal("Images_grouped_2/Texture2D/ExplosionFX/ExplosionFX_5.png"));
+    private final Animation<Texture> enemyDamageAnimation = new Animation<>(0.1f, enemyDamage1, enemyDamage2, enemyDamage3, enemyDamage4, enemyDamage5, enemyDamage6);
+
 
     private Music backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("AudioClip/Pretty Dungeon LOOP.wav"));
     private Music bgMusic1 = Gdx.audio.newMusic(Gdx.files.internal("AudioClip/Pretty Dungeon LOOP.wav"));
@@ -112,6 +127,9 @@ public class GameAssetManager {
     private Music weaponReload = Gdx.audio.newMusic(Gdx.files.internal("AudioClip/Weapon_Shotgun_Reload.wav"));
     private Music nothing = Gdx.audio.newMusic(Gdx.files.internal("AudioClip/1-second-of-silence.mp3"));
     private Music healSound = Gdx.audio.newMusic(Gdx.files.internal("AudioClip/Heal_Short.wav"));
+    private Music winSound = Gdx.audio.newMusic(Gdx.files.internal("AudioClip/you-win-sequence-2-183949.mp3"));
+    private Music loseSound = Gdx.audio.newMusic(Gdx.files.internal("AudioClip/you-lose-game-sound-230514.mp3"));
+
 
     public static GameAssetManager getGameAssetManager(){
         if (gameAssetManager == null){
@@ -301,5 +319,27 @@ public class GameAssetManager {
 
     public TextureRegionDrawable getHeartTexture() {
         return new TextureRegionDrawable(new TextureRegion(new Texture("Images_grouped_2/heart.png")));
+    }
+
+    public Music getLoseSound() {
+        if (App.getLoggedInUser() != null && !App.getLoggedInUser().isSfxEnabled()){
+            return nothing;
+        }
+        return loseSound;
+    }
+
+    public Music getWinSound() {
+        if (App.getLoggedInUser() != null && !App.getLoggedInUser().isSfxEnabled()){
+            return nothing;
+        }
+        return winSound;
+    }
+
+    public Animation<Texture> getDamageAnimation() {
+        return damageAnimation;
+    }
+
+    public Animation<Texture> getEnemyDamageAnimation() {
+        return enemyDamageAnimation;
     }
 }

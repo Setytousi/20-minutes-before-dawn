@@ -7,9 +7,9 @@ import com.tildawn.Models.GameAssetManager;
 public enum Enemies {
 
     tree("tree", 100000000, 0f, GameAssetManager.getGameAssetManager().getTreeMonsterSpawnAnimation(), GameAssetManager.getGameAssetManager().getTreeMonsterAnimation()),
-    tentacle("tentacle", 10, 0.1f, GameAssetManager.getGameAssetManager().getTentacleSpawnAnimation(), GameAssetManager.getGameAssetManager().getTentacleAnimation()),
-    eyebat("eyebat", 16, 0.2f, GameAssetManager.getGameAssetManager().getEyeBatSpawnAnimation(), GameAssetManager.getGameAssetManager().getEyeBatAnimation()),
-    elder("elder", 400, 0.5f, GameAssetManager.getGameAssetManager().getElderBrainSpawnAnimation(), GameAssetManager.getGameAssetManager().getElderBrainAnimation()),
+    tentacle("tentacle", 10, 0.2f, GameAssetManager.getGameAssetManager().getTentacleSpawnAnimation(), GameAssetManager.getGameAssetManager().getTentacleAnimation()),
+    eyebat("eyebat", 16, 0.4f, GameAssetManager.getGameAssetManager().getEyeBatSpawnAnimation(), GameAssetManager.getGameAssetManager().getEyeBatAnimation()),
+    elder("elder", 400, 1.5f, GameAssetManager.getGameAssetManager().getElderBrainSpawnAnimation(), GameAssetManager.getGameAssetManager().getElderBrainAnimation()),
     ;
 
 

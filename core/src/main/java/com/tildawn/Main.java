@@ -2,12 +2,18 @@ package com.tildawn;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Cursor;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.tildawn.Controllers.MenuControllers.StartMenuController;
 import com.tildawn.Models.GameAssetManager;
 import com.tildawn.Views.ProfileMenuView;
 import com.tildawn.Views.StartMenuView;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Cursor;
+import com.badlogic.gdx.Gdx;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class Main extends Game {
@@ -30,6 +36,7 @@ public class Main extends Game {
             Gdx.files.internal("shaders/grayscale.frag")
         );
         Main.setGrayscaleShader(grayscaleShader);
+        Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Crosshair);
         getMain().setScreen(new StartMenuView(new StartMenuController(), GameAssetManager.getGameAssetManager().getSkin()));
     }
 

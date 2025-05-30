@@ -21,6 +21,9 @@ public class PlayerController {
     private boolean damager = false;
     private Float hpTimer = 0f;
     private float damageCooldownTimer = 0f;
+    private boolean isTakingDamage = false;
+    private float damageAnimTime = 0f;
+
 
     public PlayerController(Player player){
         this.player = player;
@@ -51,6 +54,31 @@ public class PlayerController {
 
         player.getPlayerSprite().draw(Main.getBatch());
 
+        if (isTakingDamage) {
+            Animation<Texture> anim = GameAssetManager.getGameAssetManager().getDamageAnimation();
+            Texture frame = anim.getKeyFrame(damageAnimTime);
+
+            float scale = 0.5f;
+            float originalWidth = player.getPlayerSprite().getWidth();
+            float originalHeight = player.getPlayerSprite().getHeight();
+
+            float newWidth = originalWidth * scale;
+            float newHeight = originalHeight * scale;
+
+            float drawX = player.getPlayerSprite().getX() + 12 + (originalWidth - newWidth) / 2 + damageAnimTime;
+            float drawY = player.getPlayerSprite().getY() + 12 + (originalHeight - newHeight) / 2 + damageAnimTime;
+
+            Main.getBatch().draw(frame, drawX, drawY, newWidth, newHeight);
+
+            damageAnimTime += deltaTime;
+
+            if (anim.isAnimationFinished(damageAnimTime)) {
+                isTakingDamage = false;
+                damageAnimTime = 0f;
+            }
+        }
+
+
         if (player.isPlayerIdle()){
             idleAnimation();
         }
@@ -63,12 +91,13 @@ public class PlayerController {
             Bullet bullet = bulletIterator.next();
             if (bullet.getBounds().overlaps(player.getPlayerSprite().getBoundingRectangle())) {
                 player.setPlayerHealth(player.getPlayerHealth() - 1);
+
+                isTakingDamage = true;
+                damageAnimTime = 0f;
+
                 GameAssetManager.getGameAssetManager().getPlayerDamage().play();
                 if (player.getPlayerHealth() <= 10) {
                     GameAssetManager.getGameAssetManager().getLowHealthAlarm().play();
-                }
-                if (player.getPlayerHealth() <= 0){
-                    //TODO lose
                 }
                 bulletIterator.remove();
             }
@@ -81,6 +110,9 @@ public class PlayerController {
                 if (damageCooldownTimer >= 1.5f) {
                     player.setPlayerHealth(player.getPlayerHealth() - 1);
                     GameAssetManager.getGameAssetManager().getPlayerDamage().play();
+
+                    isTakingDamage = true;
+                    damageAnimTime = 0f;
 
                     if (player.getPlayerHealth() <= 10) {
                         GameAssetManager.getGameAssetManager().getLowHealthAlarm().play();
