@@ -20,6 +20,7 @@ public class PlayerController {
     private boolean speedy = false;
     private boolean damager = false;
     private Float hpTimer = 0f;
+    private float damageCooldownTimer = 0f;
 
     public PlayerController(Player player){
         this.player = player;
@@ -27,7 +28,7 @@ public class PlayerController {
 
 
     public void update(int mapWidth, int mapHeight, EnemyController enemyController, GameView gameView, float deltaTime) {
-
+        damageCooldownTimer += deltaTime;
         if (speedy) {
             speedyTimer += deltaTime;
             if (speedyTimer > 10f) {
@@ -76,17 +77,22 @@ public class PlayerController {
         for (Enemy enemy : enemies) {
             if (!enemy.isSpawning() &&
                 enemy.getSprite().getBoundingRectangle().overlaps(player.getPlayerSprite().getBoundingRectangle())) {
-                player.setPlayerHealth(player.getPlayerHealth() - 1);
-                GameAssetManager.getGameAssetManager().getPlayerDamage().play();
-                if (player.getPlayerHealth() <= 10) {
-                    GameAssetManager.getGameAssetManager().getLowHealthAlarm().play();
+
+                if (damageCooldownTimer >= 1.5f) {
+                    player.setPlayerHealth(player.getPlayerHealth() - 1);
+                    GameAssetManager.getGameAssetManager().getPlayerDamage().play();
+
+                    if (player.getPlayerHealth() <= 10) {
+                        GameAssetManager.getGameAssetManager().getLowHealthAlarm().play();
+                    }
+
+                    damageCooldownTimer = 0f;
                 }
-                if (player.getPlayerHealth() <= 0){
-                    //TODO lose
-                }
+
                 break;
             }
         }
+
 
         ArrayList<Seed> seeds = enemyController.getSeeds();
         Iterator<Seed> seedIterator = seeds.iterator();

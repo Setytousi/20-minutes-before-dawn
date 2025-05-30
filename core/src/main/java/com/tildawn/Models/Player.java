@@ -12,7 +12,7 @@ public class Player {
     private Sprite playerSprite;
     private float posX = 0;
     private float posY = 0;
-    private int playerHealth = 100;
+    private int playerHealth;
     private float time = 0;
     private float speed = 5;
     private boolean isPlayerIdle = true;
@@ -20,11 +20,13 @@ public class Player {
     private int Xp = 0;
     private int level = 1;
     private int projectileAdded = 0;
-    private int maxHp = 90;
+    private int maxHp;
     private int ammoMaxAdded = 0;
+    private int kills = 0;
 
     public Player(Heros heroType) {
-        this.playerHealth = heroType.getHP();
+        this.maxHp = heroType.getHP();
+        this.playerHealth = maxHp;
         this.speed = heroType.getSpeed();
         this.heroType = heroType;
         this.playerTexture = heroType.getTexture();
@@ -165,5 +167,13 @@ public class Player {
 
     public void setAmmoMaxAdded(int ammoMaxAdded) {
         this.ammoMaxAdded = ammoMaxAdded;
+    }
+
+    public int getKills() {
+        return kills;
+    }
+
+    public void setKills(int kills) {
+        this.kills = kills;
     }
 }

@@ -14,6 +14,7 @@ public class GameController {
     private EnemyController enemyController;
     private int mapWidth;
     private int mapHeight;
+    private float elapsedTime;
 
     public void setView(GameView view) {
         this.view = view;
@@ -26,6 +27,7 @@ public class GameController {
     }
 
     public void updateGame() {
+        elapsedTime += Gdx.graphics.getDeltaTime();
         if (view != null) {
             worldController.update();
             playerController.update(mapWidth, mapHeight, enemyController, view, Gdx.graphics.getDeltaTime());
@@ -44,5 +46,13 @@ public class GameController {
 
     public WeaponController getWeaponController() {
         return weaponController;
+    }
+
+    public GameView getView() {
+        return view;
+    }
+
+    public float getElapsedTime() {
+        return elapsedTime;
     }
 }

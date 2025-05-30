@@ -4,7 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class GameAssetManager {
     private static GameAssetManager gameAssetManager;
@@ -295,5 +297,9 @@ public class GameAssetManager {
 
     public Texture getSeed() {
         return seed;
+    }
+
+    public TextureRegionDrawable getHeartTexture() {
+        return new TextureRegionDrawable(new TextureRegion(new Texture("Images_grouped_2/heart.png")));
     }
 }

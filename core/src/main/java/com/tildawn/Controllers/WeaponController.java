@@ -128,4 +128,8 @@ public class WeaponController {
     public ArrayList<Bullet> getBullets() {
         return bullets;
     }
+
+    public Weapon getWeapon() {
+        return weapon;
+    }
 }

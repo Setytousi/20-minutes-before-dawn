@@ -96,6 +96,7 @@ public class EnemyController {
 
             // Remove dead enemies
             if (enemy.isDead()) {
+                gameController.getPlayerController().getPlayer().setKills(gameController.getPlayerController().getPlayer().getKills() + 1);
                 iterator.remove();
                 GameAssetManager.getGameAssetManager().getEnemyDeathSound().play();
                 Seed seed = new Seed(enemy.getX(), enemy.getY());
