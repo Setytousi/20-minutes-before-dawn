@@ -124,6 +124,25 @@ public class PlayerController {
                 break;
             }
         }
+        Shield elderShield = gameView.getController().getEnemyController().getElderShield();
+        if (elderShield != null && elderShield.isActive()) {
+            elderShield.update(deltaTime);
+            elderShield.draw(Main.getBatch(), elderShield.getShieldTexture());
+
+            Player player = gameView.getController().getPlayerController().getPlayer();
+            if (elderShield.collidesWith(player.getPosX(), player.getPosY(), player.getPlayerSprite().getWidth(), player.getPlayerSprite().getHeight())) {
+                if (damageCooldownTimer >= 1.5f) {
+                    player.setPlayerHealth(player.getPlayerHealth() - 1);
+                    isTakingDamage = true;
+                    damageAnimTime = 0f;
+                    GameAssetManager.getGameAssetManager().getPlayerDamage().play();
+                    if (player.getPlayerHealth() <= 10) {
+                        GameAssetManager.getGameAssetManager().getLowHealthAlarm().play();
+                    }
+                    damageCooldownTimer = 0f;
+                }
+            }
+        }
 
 
         ArrayList<Seed> seeds = enemyController.getSeeds();

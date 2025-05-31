@@ -114,6 +114,7 @@ public class GameAssetManager {
     private final Texture enemyDamage6 = new Texture(Gdx.files.internal("Images_grouped_2/Texture2D/ExplosionFX/ExplosionFX_5.png"));
     private final Animation<Texture> enemyDamageAnimation = new Animation<>(0.1f, enemyDamage1, enemyDamage2, enemyDamage3, enemyDamage4, enemyDamage5, enemyDamage6);
 
+    private final Texture shieldTexture = new Texture(Gdx.files.internal("shield.png"));
 
     private Music backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("AudioClip/Pretty Dungeon LOOP.wav"));
     private Music bgMusic1 = Gdx.audio.newMusic(Gdx.files.internal("AudioClip/Pretty Dungeon LOOP.wav"));
@@ -341,5 +342,9 @@ public class GameAssetManager {
 
     public Animation<Texture> getEnemyDamageAnimation() {
         return enemyDamageAnimation;
+    }
+
+    public Texture getShieldTexture() {
+        return shieldTexture;
     }
 }

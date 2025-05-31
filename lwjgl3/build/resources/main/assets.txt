@@ -1318,6 +1318,7 @@ background.png
 bullet.png
 cursor.png
 libgdx.png
+shield.png
 skin/font-export.fnt
 skin/font-subtitle-export.fnt
 skin/font-title-export.fnt

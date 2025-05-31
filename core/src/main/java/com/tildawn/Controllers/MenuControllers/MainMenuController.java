@@ -59,7 +59,8 @@ public class MainMenuController {
             else if (view.getResumeGame().isChecked()){
                 GameAssetManager.getGameAssetManager().getUIclick().setVolume(0.5f);
                 GameAssetManager.getGameAssetManager().getUIclick().play();
-                //TODO
+                Main.getMain().getScreen().dispose();
+                Main.getMain().setScreen(App.getCurrentGame().getView());
             }
         }
     }

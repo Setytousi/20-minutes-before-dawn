@@ -26,6 +26,7 @@ public class EnemyController {
     private GameController gameController;
     private Animation<Texture> damageAnimation;
     boolean elderSpawned = false;
+    private Shield elderShield;
 
     public EnemyController(int totalTime, int mapWidth, int mapHeight, GameController gameController) {
         this.totalTime = totalTime * 60;
@@ -35,7 +36,7 @@ public class EnemyController {
     }
 
     public void update(float delta, float playerX, float playerY, int mapWidth, int mapHeight, ArrayList<Bullet> bullets) {
-        elapsedTime += delta;
+        elapsedTime = gameController.getElapsedTime();
         tentacleTime += delta;
         elderTime += delta;
         if (tentacleTime >= 3){
@@ -83,13 +84,18 @@ public class EnemyController {
             }
             if (enemy.isTakingDamage()){
                 Texture frame = damageAnimation.getKeyFrame(enemy.getDamageTimer());
-                Main.getBatch().draw(frame, enemy.getX(), enemy.getY(), enemy.getSprite().getWidth(), enemy.getSprite().getHeight());
+                Main.getBatch().draw(frame, enemy.getX() + 5, enemy.getY() + 5, enemy.getSprite().getWidth(), enemy.getSprite().getHeight());
                 enemy.setDamageTimer(enemy.getDamageTimer() + delta);
 
                 if (enemy.getDamageTimer() >= 0.6f){
                     enemy.setDead(true);
                     gameController.getPlayerController().getPlayer().setKills(gameController.getPlayerController().getPlayer().getKills() + 1);
                     GameAssetManager.getGameAssetManager().getEnemyDeathSound().play();
+                    if (enemy.getType() == Enemies.elder) {
+                        if (elderShield != null) {
+                            elderShield.destroy();
+                        }
+                    }
                     Seed seed = new Seed(enemy.getX(), enemy.getY());
                     seeds.add(seed);
                     iterator.remove();
@@ -251,6 +257,7 @@ public class EnemyController {
         if (!check){
             elderSpawned = true;
             enemies.add(new Enemy(Enemies.elder, x, y));
+            elderShield = new Shield(mapWidth, mapHeight);
         }
     }
 
@@ -284,5 +291,9 @@ public class EnemyController {
 
     public ArrayList<Bullet> getEnemyBullets() {
         return enemyBullets;
+    }
+
+    public Shield getElderShield() {
+        return elderShield;
     }
 }

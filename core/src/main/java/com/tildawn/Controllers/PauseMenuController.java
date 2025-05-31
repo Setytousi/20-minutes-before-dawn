@@ -1,10 +1,13 @@
 package com.tildawn.Controllers;
 
+import com.tildawn.Controllers.MenuControllers.MainMenuController;
 import com.tildawn.Main;
 import com.tildawn.Models.App;
+import com.tildawn.Models.Game;
 import com.tildawn.Models.GameAssetManager;
 import com.tildawn.Models.User;
 import com.tildawn.Views.LoseMenuView;
+import com.tildawn.Views.MainMenuView;
 import com.tildawn.Views.PauseMenuView;
 
 public class PauseMenuController {
@@ -27,7 +30,11 @@ public class PauseMenuController {
             Main.getMain().setScreen(view.getGameController().getView());
         }
         else if (view.getSaveAndExitButton().isChecked()){
-            //TODO
+            App.setCurrentGame(new Game());
+            App.getCurrentGame().setGameController(view.getGameController());
+            App.getCurrentGame().setView(view.getGameController().getView());
+            Main.getMain().getScreen().dispose();
+            Main.getMain().setScreen(new MainMenuView(new MainMenuController(), GameAssetManager.getGameAssetManager().getSkin()));
         }
         else if (view.getGiveUpButton().isChecked()){
             Main.getMain().getScreen().dispose();

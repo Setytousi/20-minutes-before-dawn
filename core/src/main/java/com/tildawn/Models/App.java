@@ -30,4 +30,8 @@ public class App {
     public static void removeUser(User user) {
         users.remove(user);
     }
+
+    public static void setCurrentGame(Game currentGame) {
+        App.currentGame = currentGame;
+    }
 }
