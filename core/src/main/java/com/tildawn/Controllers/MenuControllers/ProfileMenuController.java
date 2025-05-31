@@ -1,5 +1,6 @@
 package com.tildawn.Controllers.MenuControllers;
 
+import com.tildawn.Database;
 import com.tildawn.Main;
 import com.tildawn.Models.App;
 import com.tildawn.Models.GameAssetManager;
@@ -54,6 +55,7 @@ public class ProfileMenuController {
                 view2.setErrorMessage("Password format is incorrect");
             } else {
                 App.getLoggedInUser().setPassword(password);
+                Database.updateUserPassword(App.getLoggedInUser().getUsername(), App.getLoggedInUser().getPassword());
                 view2.setErrorMessage("Password changed successfully");
             }
 
@@ -80,6 +82,7 @@ public class ProfileMenuController {
                     view2.setErrorMessage("Username is already taken!");
                 }
                 else{
+                    Database.updateUsername(App.getLoggedInUser().getUsername(), username);
                     App.getLoggedInUser().setUsername(username);
                     view2.setErrorMessage("Username changed successfully");
                 }
@@ -92,6 +95,7 @@ public class ProfileMenuController {
         else if (view.getDeleteAccountButton().isChecked()) {
             GameAssetManager.getGameAssetManager().getUIclick().setVolume(0.5f);
             GameAssetManager.getGameAssetManager().getUIclick().play();
+            Database.deleteUser(App.getLoggedInUser().getUsername());
             App.removeUser(App.getLoggedInUser());
             App.setLoggedInUser(null);
             Main.getMain().getScreen().dispose();

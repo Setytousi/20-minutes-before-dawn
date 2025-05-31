@@ -1,11 +1,14 @@
 package com.tildawn.Controllers.MenuControllers;
 
+import com.tildawn.Database;
 import com.tildawn.Main;
 import com.tildawn.Models.App;
 import com.tildawn.Models.GameAssetManager;
 import com.tildawn.Models.User;
 import com.tildawn.Views.LoginMenuView;
 import com.tildawn.Views.RegisterMenuView;
+
+import javax.xml.crypto.Data;
 
 public class RegisterMenuController {
     private RegisterMenuView view;
@@ -37,7 +40,8 @@ public class RegisterMenuController {
                         registerMenuView2.setSuccessLabel("");
                     }
                     else {
-                        User user = new User(username, password, answer);
+                        User user = new User(username, password, answer, 0, 0, 0);
+                        Database.saveUser(username, password, answer, 0, 0, 0);
                         App.addUser(user);
                         registerMenuView2.setSuccessLabel("registered successfully");
                         registerMenuView2.setErrorLabel("");

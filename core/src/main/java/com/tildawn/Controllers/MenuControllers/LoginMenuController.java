@@ -52,7 +52,7 @@ public class LoginMenuController {
             else if (view.getGuestButton().isChecked()){
                 GameAssetManager.getGameAssetManager().getUIclick().setVolume(0.5f);
                 GameAssetManager.getGameAssetManager().getUIclick().play();
-                User user = new User("guest", "guest", "guest");
+                User user = new User("guest", "guest", "guest", 0, 0, 0);
                 App.setLoggedInUser(user);
                 Main.getMain().getScreen().dispose();
                 Main.getMain().setScreen(new MainMenuView(new MainMenuController(), GameAssetManager.getGameAssetManager().getSkin()));

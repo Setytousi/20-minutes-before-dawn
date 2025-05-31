@@ -7,13 +7,17 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.tildawn.Controllers.MenuControllers.StartMenuController;
+import com.tildawn.Models.App;
 import com.tildawn.Models.GameAssetManager;
+import com.tildawn.Models.User;
 import com.tildawn.Views.ProfileMenuView;
 import com.tildawn.Views.StartMenuView;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.Gdx;
+
+import java.util.List;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class Main extends Game {
@@ -37,6 +41,12 @@ public class Main extends Game {
         );
         Main.setGrayscaleShader(grayscaleShader);
         Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Crosshair);
+        Database.createUsersTable();
+        List<User> allUsers = Database.loadAllUsers();
+        for (User u : allUsers) {
+            App.addUser(u);
+        }
+
         getMain().setScreen(new StartMenuView(new StartMenuController(), GameAssetManager.getGameAssetManager().getSkin()));
     }
 

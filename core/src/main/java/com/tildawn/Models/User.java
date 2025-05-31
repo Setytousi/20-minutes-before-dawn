@@ -24,7 +24,7 @@ public class User {
     private boolean sfxEnabled;
     private boolean autoReload;
     private boolean blackAndWhite;
-    private int maxAliveTime;
+    private float maxAliveTime;
     private int killNumber;
     private String avatarPath;
     private Heros heroType;
@@ -42,11 +42,13 @@ public class User {
         }
     }
 
-    public User(String username, String password, String securityQuestionAnswer) {
+    public User(String username, String password, String securityQuestionAnswer, int score, float maxAliveTime, int killNumber) {
         this.username = username;
         this.password = password;
         this.securityQuestionAnswer = securityQuestionAnswer;
         this.score = 0;
+        this.maxAliveTime = maxAliveTime;
+        this.killNumber = killNumber;
         this.heroType = Heros.hero1;
         {
             Random rand = new Random();
@@ -193,7 +195,7 @@ public class User {
         this.avatarTexture = avatarTexture;
     }
 
-    public int getMaxAliveTime() {
+    public float getMaxAliveTime() {
         return maxAliveTime;
     }
 
@@ -201,7 +203,7 @@ public class User {
         return killNumber;
     }
 
-    public void setMaxAliveTime(int maxAliveTime) {
+    public void setMaxAliveTime(float maxAliveTime) {
         this.maxAliveTime = maxAliveTime;
     }
 

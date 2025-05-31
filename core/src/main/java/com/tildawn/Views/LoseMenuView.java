@@ -8,9 +8,12 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tildawn.Controllers.GameController;
 import com.tildawn.Controllers.MenuControllers.MainMenuController;
+import com.tildawn.Database;
 import com.tildawn.Main;
 import com.tildawn.Models.App;
 import com.tildawn.Models.GameAssetManager;
+
+import javax.xml.crypto.Data;
 
 public class LoseMenuView implements Screen {
     private Stage stage;
@@ -31,6 +34,12 @@ public class LoseMenuView implements Screen {
         numberOfKillsLabel = new Label(gameController.getPlayerController().getPlayer().getKills() + " kills", skin, "subtitle");
         int score = (gameController.getPlayerController().getPlayer().getKills() * ((int) gameController.getElapsedTime() / 60));
         scoreLabel = new Label("score : " + score, skin, "subtitle");
+        Database.updateUserScore(App.getLoggedInUser().getUsername(), App.getLoggedInUser().getScore() + score);
+        App.getLoggedInUser().setScore(App.getLoggedInUser().getScore() + score);
+        Database.updateUserKills(App.getLoggedInUser().getUsername(), Math.max(App.getLoggedInUser().getKillNumber(), gameController.getPlayerController().getPlayer().getKills()));
+        App.getLoggedInUser().setKillNumber(Math.max(App.getLoggedInUser().getKillNumber(), gameController.getPlayerController().getPlayer().getKills()));
+        Database.updateUserMaxAliveTime(App.getLoggedInUser().getUsername(), Math.max(App.getLoggedInUser().getMaxAliveTime(), gameController.getElapsedTime() / 60));
+        App.getLoggedInUser().setMaxAliveTime(Math.max(App.getLoggedInUser().getMaxAliveTime(), gameController.getElapsedTime() / 60));
         backButton = new TextButton("back", skin);
     }
 
